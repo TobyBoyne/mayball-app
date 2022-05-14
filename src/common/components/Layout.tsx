@@ -3,12 +3,14 @@ import Navbar from './Navbar'
 import Footer from './Footer'
 import Head from 'next/head'
 
+
+
 type Props = {
   children: ReactNode
   title: string
 }
 
-export default function AreaLayout( {children, title} : Props ) {
+export default function Layout( {children, title} : Props ) {
   return (
     <>
       <Head>
@@ -18,7 +20,9 @@ export default function AreaLayout( {children, title} : Props ) {
       </Head>
 
       <Navbar />
-      <main>
+      <main className='max-w-prose mx-auto
+                      flex flex-col items-center'>
+        <h1 className='text-center text-7xl my-10'>{title}</h1>
         {children}
       </main>
       <Footer />

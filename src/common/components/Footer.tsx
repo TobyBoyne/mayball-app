@@ -1,7 +1,7 @@
 export default function Footer () {
   return (
-    <footer>
-      <p>Downing College May Ball</p>
+    <footer className="fixed bottom-0">
+      <p>Footer: Downing College May Ball</p>
     </footer>
     )
 }
