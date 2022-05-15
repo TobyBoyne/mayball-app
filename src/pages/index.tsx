@@ -1,6 +1,5 @@
 import type { NextPage } from 'next'
-import Image from 'next/image'
-
+import Map from '../modules/map/Map'
 import Layout from '../common/components/Layout'
 
 
@@ -10,10 +9,7 @@ const Home: NextPage = () => {
   }
   return (
     <Layout title="Home">
-      <Image src={`http://placekitten.com/${mapSize.width}/${mapSize.height}`} width={mapSize.width} height={mapSize.height}
-      alt="Placeholder image for site plan">
-
-      </Image>
+      <Map />
       Home Content
     </Layout>
   )
