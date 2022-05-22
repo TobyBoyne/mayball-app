@@ -22,7 +22,7 @@ export default function Navbar () {
 
         <NavDivider/>
 
-        <NavElement slug="/about">About</NavElement>
+        <NavElement slug="/timeline">Timeline</NavElement>
         <NavElement slug="/more">More</NavElement>
       </nav>
     </header>

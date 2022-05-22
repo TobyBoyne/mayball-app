@@ -10,7 +10,7 @@ type MapAreaProps = {
 } 
 
 export default function MapArea ( {children, zoom} : MapAreaProps ) {
-  
+
   return (
     <>
       <MapElement position={{x:10, y:10}} zoom={zoom} />
