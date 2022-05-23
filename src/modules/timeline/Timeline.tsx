@@ -21,14 +21,14 @@ const areaEvents = [
   },
 
   {
-    name: "area1",
+    name: "area2",
     colour: "bg-amber-500",
-    events: [{
-      name: "area2e2",
+    events: [
+      {
+      name: "area2e1",
       start: "2022-06-23T21:00",
       end: "2022-06-23T21:45"
-    },
-    {
+    }, {
       name: "area2e2",
       start: "2022-06-23T22:00",
       end: "2022-06-23T23:30"
@@ -37,7 +37,7 @@ const areaEvents = [
   },
 
   {
-    name: "area1",
+    name: "area3",
     colour: "bg-fuchsia-500",
     events: [{
       name: "area3e1",
@@ -69,7 +69,7 @@ export default function Timeline () {
       flex flex-col gap-3">
       {areaEvents.map( (data, index) => {
         return (
-        <TimelineArea time={time} {...data}/>
+        <TimelineArea time={time} key={data.name} {...data}/>
         )
       })}
       {/* <TimelineArea colour="bg-blue-500" time={time}/>

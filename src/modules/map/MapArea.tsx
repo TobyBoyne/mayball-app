@@ -5,15 +5,25 @@ import { ReactNode } from "react"
 import MapElement from "./MapElement"
 
 type MapAreaProps = {
-  children: ReactNode
+  name: string
+  colour: string
+  elements: {
+    name: string
+    shape: {w: number, h: number}
+    pos: {x: number, y: number}
+  }[]
   zoom: number
 } 
 
-export default function MapArea ( {children, zoom} : MapAreaProps ) {
+export default function MapArea ( {name, colour, elements, zoom} : MapAreaProps ) {
 
   return (
     <>
-      <MapElement position={{x:10, y:10}} zoom={zoom} />
+      {elements.map((data, index) => {
+        return (
+          <MapElement zoom={zoom} area={name} {...data} />
+        )
+      })}
     </>
   )
 }

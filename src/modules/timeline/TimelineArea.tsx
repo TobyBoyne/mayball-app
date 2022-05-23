@@ -30,9 +30,8 @@ export default function TimelineArea ({time, name, colour, events}: TimelineArea
       <div className="w-0 h-full absolute z-40
         border-red-500 border-2" style={{left: "100px"}}></div>
       {events.map((data, index) => {
-        console.log("data", data)
         return (
-          <TimelineEvent time={time} colour={colour} 
+          <TimelineEvent time={time} colour={colour} key={data.name}
           {...data}/>
         )
       })}

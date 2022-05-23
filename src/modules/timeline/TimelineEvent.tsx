@@ -20,7 +20,6 @@ export default function TimelineEvent ({time, colour, name, start, end}: Timelin
   const offset = 100 + scale * (startTime.getTime() - time.getTime()) / 1000
   const duration = scale * (endTime.getTime() - startTime.getTime()) / 1000
 
-  console.log(offset)
   const style = {
     width: duration,
     left: offset,
@@ -30,7 +29,8 @@ export default function TimelineEvent ({time, colour, name, start, end}: Timelin
   return (
     <div className={`${colour} h-full
       absolute`}
-      style={style}>
+      style={style}
+      key={name}>
         <p>{name}</p>
     </div>
   )

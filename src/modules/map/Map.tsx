@@ -7,6 +7,21 @@ import Image from 'next/image'
 import MapArea from "./MapArea";
 import { useState } from "react";
 
+const mapElements = [
+  {
+    name: "area1",
+    colour: "bg-blue-500",
+    elements: [
+      {
+        name: "area1el1",
+        shape: {h: 100, w: 100},
+        pos: {x: 30, y: 30},
+      }
+    ]
+  }
+]
+
+
 export default function Map () {
   // State used to record zoom level
   const [zoom, setZoom] = useState(1)
@@ -27,13 +42,15 @@ export default function Map () {
     <TransformWrapper
       ref={ (ref)=> typesafeSetZoom(ref?.state.scale) }>
       <TransformComponent>
-        <div className="">
           <Image src={"/site_plan.png"} width={mapSize.width} height={mapSize.height}
             alt="Placeholder image for site plan">
           </Image>
-          <MapArea zoom={zoom}>
-          </MapArea>
-        </div>
+
+          {mapElements.map((data, index) => {
+            return (
+              <MapArea key={index} zoom={zoom} {...data} />
+            )
+          })}
       </TransformComponent>
     </TransformWrapper>
   )
