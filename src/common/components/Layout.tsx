@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import Navbar from './Navbar'
+import Navbar from '../../modules/nav/Navbar'
 import Footer from './Footer'
 import Head from 'next/head'
 
@@ -20,7 +20,7 @@ export default function Layout( {children, title} : Props ) {
       </Head>
 
       <Navbar />
-      <main className='max-w-prose mx-auto
+      <main className='max-w-prose mx-auto my-10
                       flex flex-col items-center'>
         <h1 className='text-center text-7xl my-10'>{title}</h1>
         {children}
