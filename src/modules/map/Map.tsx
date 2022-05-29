@@ -16,6 +16,7 @@ const mapElements = [
         name: "area1el1",
         shape: {h: 100, w: 100},
         pos: {x: 30, y: 30},
+        link: "firstsection",
       }
     ]
   }
@@ -43,8 +44,9 @@ export default function Map () {
       ref={ (ref)=> typesafeSetZoom(ref?.state.scale) }>
       <TransformComponent>
           <Image src={"/site_plan.png"} width={mapSize.width} height={mapSize.height}
-            alt="Placeholder image for site plan">
-          </Image>
+            alt="Placeholder image for site plan"
+            className="relative"
+          />
 
           {mapElements.map((data, index) => {
             return (

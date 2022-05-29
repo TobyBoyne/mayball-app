@@ -5,7 +5,7 @@
 
 import { useState, TouchEvent, MouseEvent } from "react"
 
-function useShortPress (onShortPress: () => any, delay: number = 300) {
+function useShortPress (onShortPress: () => any, delay: number = 200) {
 
   const [timerId, setTimerId] = useState(0)
   const [isLong, setIsLong] = useState(false)

@@ -7,6 +7,8 @@ import { useState, useEffect } from "react";
  
 import TimelineArea from "./TimelineArea";
 
+// TODO: use Gesture from framer
+
 // Example data - to be moved to proper file format
 // each object should be the same format as TimelineAreaProps
 // events object should be the same format as TimelineEventProps
@@ -60,6 +62,7 @@ export default function Timeline () {
   const [time, setTime] = useState(new Date("2022-06-23T21:00"))
 
 
+//   TODO: make custom hook
 //   useEffect(() => {
 //     const timer = setInterval(() => { // Creates an interval which will update the current data every minute
 //     // This will trigger a rerender every component that uses the useDate hook.
