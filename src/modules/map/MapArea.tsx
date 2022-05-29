@@ -21,7 +21,7 @@ export default function MapArea ( {name, colour, elements, zoom} : MapAreaProps 
     <>
       {elements.map((data, index) => {
         return (
-          <MapElement zoom={zoom} area={name} {...data} />
+          <MapElement zoom={zoom} area={name} key={data.name} {...data} />
         )
       })}
     </>

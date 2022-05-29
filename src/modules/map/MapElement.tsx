@@ -3,6 +3,8 @@
  */
 
 import Link from 'next/link'
+import useShortPress from "./useShortPress"
+import { useRouter } from "next/router"
 
 type MapElementProps = {
   name: string
@@ -23,11 +25,17 @@ export default function MapElement ({name, shape, pos, area, zoom, startTime, en
     width: shape.w
   }
 
+  const router = useRouter()
+
+  const path = `/${area}#${name}`
+  const shortPress = useShortPress(() => {router.push(path)})
+
   return (
     // <Link href={`/${area}`}>
       <div className="absolute
       bg-emerald-400 transition-opacity"
-        style={style}>
+        style={style}
+        {...shortPress}>
         <p className="text-2xs">{name}</p>
       </div>
     // </Link>

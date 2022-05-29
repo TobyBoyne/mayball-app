@@ -2,6 +2,7 @@
  * The timeline contains many TimelineAreas
  */
 
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { useState, useEffect } from "react";
  
 import TimelineArea from "./TimelineArea";
@@ -47,7 +48,12 @@ const areaEvents = [
   },
 ]
 
-
+const timeline = {
+  scale: 0.02 / 1000, // pixels per ms
+  curTimeOffset: 1000*60*30, // 30 minutes
+  earliest: (new Date("2022-06-23T19:00")).getTime(),
+  latest: (new Date("2022-06-24T06:00")).getTime(),
+}
 
 export default function Timeline () {
 
@@ -63,18 +69,22 @@ export default function Timeline () {
 //     clearInterval(timer); // Return a funtion to clear the timer so that it will stop being called on unmount
 //   }
 // }, []);
- 
+  
+  const fullWidth = (timeline.latest - timeline.earliest) * timeline.scale
+  console.log(fullWidth)
    return (
-     <div className="w-full
-      flex flex-col gap-3">
-      {areaEvents.map( (data, index) => {
-        return (
-        <TimelineArea time={time} key={data.name} {...data}/>
-        )
-      })}
-      {/* <TimelineArea colour="bg-blue-500" time={time}/>
-      <TimelineArea colour="bg-fuchsia-500" time={time}/>
-      <TimelineArea colour="bg-amber-500" time={time}/> */}
-     </div>
+    <TransformWrapper minScale={1} maxScale={1}
+      initialPositionX={0}>
+      <TransformComponent wrapperStyle={{width:600}}>
+        <div className="flex flex-col gap-3" 
+          style={{height: 600, width: fullWidth}}>
+          {areaEvents.map( (data, index) => {
+            return (
+            <TimelineArea time={time} key={data.name} {...data}/>
+            )
+          })}
+        </div>
+      </TransformComponent>
+    </TransformWrapper>
    )
  }

@@ -25,8 +25,8 @@ export default function TimelineArea ({time, name, colour, events}: TimelineArea
   // const end = new Date(time.getTime() + 1000*60*60)
 
   return (
-    <div className="w-full h-[100px] bg-slate-200
-      overflow-hidden relative">
+    <div className="w-full flex-grow bg-slate-200
+      relative">
       <div className="w-0 h-full absolute z-40
         border-red-500 border-2" style={{left: "100px"}}></div>
       {events.map((data, index) => {

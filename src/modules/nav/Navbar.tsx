@@ -35,7 +35,7 @@ export default function Navbar () {
         <NavDivider/>
 
         <NavElement slug="/timeline">Timeline</NavElement>
-        <NavElement slug="/more">More</NavElement>
+        <NavElement slug="/heatmap">Heatmap</NavElement>
       </nav>
     </header>
   )
