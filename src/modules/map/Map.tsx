@@ -4,14 +4,17 @@
 
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import Image from 'next/image'
-import MapArea from "./MapArea";
+import { MapArea, HeatmapArea } from "./MapArea";
 import { useState } from "react";
 import { motion } from "framer-motion";
 
 const mapElements = [
   {
     name: "area1",
+    shape: "M 0 30 L 30 30 L 35 50 L 0 50",
     colour: "bg-blue-500",
+    capacity: 100,
+    pop: 80,
     elements: [
       {
         name: "area1el1",
@@ -24,9 +27,11 @@ const mapElements = [
 ]
 
 
-export default function Map () {
+export default function Map ({heatmap=false}) {
   // State used to record zoom level
   const [zoom, setZoom] = useState(1)
+
+  const [isHeatmap, setIsHeatmap] = useState(heatmap)
 
   const mapSize = {
     height: 600, width: 1006
@@ -38,7 +43,6 @@ export default function Map () {
     }
   } 
 
-
   // console.log('ref', ref?.state.scale)
   return (
     <TransformWrapper
@@ -49,11 +53,27 @@ export default function Map () {
             className="relative"
           />
 
-          {mapElements.map((data, index) => {
-            return (
-              <MapArea key={index} zoom={zoom} {...data} />
-            )
-          })}
+          { isHeatmap ? (
+            <svg
+              className="w-full h-full absolute"
+              viewBox="0 0 100 100"
+            >
+              <filter id="blur"><feGaussianBlur stdDeviation={1} /></filter>
+              {mapElements.map((data, index) => {
+                return (
+                  <HeatmapArea key={data.name} zoom={zoom} {...data}/>
+                )
+              })
+            }
+
+            </svg>
+          ) : (
+          mapElements.map((data, index) => {
+              return (
+                <MapArea key={index} zoom={zoom} {...data} />
+              )
+            })
+          )}
       </TransformComponent>
     </TransformWrapper>
   )

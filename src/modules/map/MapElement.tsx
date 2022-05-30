@@ -6,21 +6,14 @@ import Link from 'next/link'
 import useShortPress from "../../common/hooks/useShortPress"
 import { useRouter } from "next/router"
 import { motion } from "framer-motion"
-
-interface MapElementInterface {
-  name: string
-  shape: {w: number, h: number}
-  pos: {x: number, y: number}
-  link?: string
-  startTime?: Date
-  endTime?: Date
-}
-
+import { MapElementInterface } from "./mapTypes"
 
 interface MapElementProps extends MapElementInterface {
   area: string
   zoom: number 
 }
+
+// TODO: use svg paths
 
 export default function MapElement ({name, shape, pos, area, zoom, link, startTime, endTime} : MapElementProps) {
   const zoomTransition = 2
@@ -35,7 +28,7 @@ export default function MapElement ({name, shape, pos, area, zoom, link, startTi
 
   const router = useRouter()
 
-  const path = `/${area}${link ? "#" + link : ""}`
+  const path = `/areas/${area}${link ? "#" + link : ""}`
   const shortPress = useShortPress(() => {router.push(path)})
 
   return (
