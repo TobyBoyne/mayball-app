@@ -3,6 +3,8 @@
  */
 
 import TimelineEvent from "./TimelineEvent"
+import TimelineContext from "./TimelineContext"
+import { useContext } from "react"
 
 type EventDetails = {
   // children: ReactNode
@@ -13,25 +15,25 @@ type EventDetails = {
 
 type TimelineAreaProps = {
   // children: ReactNode
-  time: Date
   name: string
   colour: string
   events: EventDetails[]
 } 
 
-export default function TimelineArea ({time, name, colour, events}: TimelineAreaProps) {
-
-  // const start = new Date(time.getTime() - 1000*60*30)
-  // const end = new Date(time.getTime() + 1000*60*60)
+export default function TimelineArea ({name, colour, events}: TimelineAreaProps) {
+  const timeline = useContext(TimelineContext)
 
   return (
     <div className="w-full flex-grow bg-slate-200
       relative">
-      <div className="w-0 h-full absolute z-40
-        border-red-500 border-2" style={{left: "100px"}}></div>
+      <div 
+        className="w-0 h-full absolute z-40
+        border-red-500 border-2" 
+        style={{left: timeline.scale * (timeline.time - timeline.earliest)}} 
+      />
       {events.map((data, index) => {
         return (
-          <TimelineEvent time={time} colour={colour} key={data.name}
+          <TimelineEvent colour={colour} key={data.name}
           {...data}/>
         )
       })}

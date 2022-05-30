@@ -9,6 +9,7 @@ function MyApp({ Component, pageProps, router }: AppProps) {
   return (
   <>
     <Head>
+      <title>DCMB 2022</title>
       <meta name="description" content="Webapp created for Downing May Ball 2022" />
       <link rel="icon" href="/favicon.ico" />
     </Head>

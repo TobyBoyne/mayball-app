@@ -3,11 +3,10 @@
  */
 
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
-import { useState, useEffect } from "react";
+import { useState, useContext, createContext } from "react";
  
 import TimelineArea from "./TimelineArea";
-
-// TODO: use Gesture from framer
+import TimelineContext from "./TimelineContext";
 
 // Example data - to be moved to proper file format
 // each object should be the same format as TimelineAreaProps
@@ -50,7 +49,7 @@ const areaEvents = [
   },
 ]
 
-const timeline = {
+const timelineData = {
   scale: 0.02 / 1000, // pixels per ms
   curTimeOffset: 1000*60*30, // 30 minutes
   earliest: (new Date("2022-06-23T19:00")).getTime(),
@@ -59,9 +58,10 @@ const timeline = {
 
 export default function Timeline () {
 
-  const [time, setTime] = useState(new Date("2022-06-23T21:00"))
-
-
+  const [time, setTime] = useState((new Date("2022-06-23T23:00")).getTime())
+  const timeline = useContext(TimelineContext)
+  // TODO: scroll to red line
+  
 //   TODO: make custom hook
 //   useEffect(() => {
 //     const timer = setInterval(() => { // Creates an interval which will update the current data every minute
@@ -73,21 +73,19 @@ export default function Timeline () {
 //   }
 // }, []);
   
-  const fullWidth = (timeline.latest - timeline.earliest) * timeline.scale
-  console.log(fullWidth)
-   return (
-    <TransformWrapper minScale={1} maxScale={1}
-      initialPositionX={0}>
-      <TransformComponent wrapperStyle={{width:600}}>
-        <div className="flex flex-col gap-3" 
-          style={{height: 600, width: fullWidth}}>
-          {areaEvents.map( (data, index) => {
-            return (
-            <TimelineArea time={time} key={data.name} {...data}/>
-            )
-          })}
-        </div>
-      </TransformComponent>
-    </TransformWrapper>
+  const fullWidth = (timelineData.latest - timelineData.earliest) * timelineData.scale
+   return (      
+        <TimelineContext.Provider value={{...timelineData, time:time}}>
+          <div className="w-2/3 overflow-x-scroll">
+            <div className="flex flex-col gap-3"
+              style={{height: 600, width: fullWidth}}>
+              {areaEvents.map( (data, index) => {
+                return (
+                <TimelineArea key={data.name} {...data}/>
+                )
+              })}
+            </div>
+          </div>
+        </TimelineContext.Provider>
    )
  }

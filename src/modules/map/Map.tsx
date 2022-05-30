@@ -6,6 +6,7 @@ import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import Image from 'next/image'
 import MapArea from "./MapArea";
 import { useState } from "react";
+import { motion } from "framer-motion";
 
 const mapElements = [
   {

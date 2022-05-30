@@ -3,8 +3,9 @@
  */
 
 import Link from 'next/link'
-import useShortPress from "./useShortPress"
+import useShortPress from "../../common/hooks/useShortPress"
 import { useRouter } from "next/router"
+import { motion } from "framer-motion"
 
 interface MapElementInterface {
   name: string
@@ -38,10 +39,12 @@ export default function MapElement ({name, shape, pos, area, zoom, link, startTi
   const shortPress = useShortPress(() => {router.push(path)})
 
   return (
-      <div className="absolute
-      bg-emerald-400 transition-opacity duration-300"
+      <div
+        className="absolute
+        bg-emerald-400 transition-opacity duration-300"
         style={style}
-        {...shortPress}>
+        {...shortPress}
+      >
         <p className="text-2xs">{name}</p>
       </div>
   )

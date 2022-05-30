@@ -2,23 +2,28 @@
  * This represents a single event in an area.
  */
 
+import useShortPress from "../../common/hooks/useShortPress"
+import router from "next/router"
+import { useContext } from "react"
+import TimelineContext from "./TimelineContext"
+
+
  type TimelineEventProps = {
   // children: ReactNode
-  time: Date
   colour: string
   name: string
   start: string
   end: string
 } 
 
-export default function TimelineEvent ({time, colour, name, start, end}: TimelineEventProps) {
-  const scale = 0.02
+export default function TimelineEvent ({colour, name, start, end}: TimelineEventProps) {
+  const timeline = useContext(TimelineContext)
 
-  const startTime = new Date(start)
-  const endTime = new Date(end)
+  const startTime = (new Date(start)).getTime()
+  const endTime = (new Date(end)).getTime()
 
-  const offset = 100 + scale * (startTime.getTime() - time.getTime()) / 1000
-  const duration = scale * (endTime.getTime() - startTime.getTime()) / 1000
+  const offset = timeline.scale * (startTime - timeline.earliest) 
+  const duration = timeline.scale * (endTime - startTime) 
 
   const style = {
     width: duration,
@@ -26,8 +31,10 @@ export default function TimelineEvent ({time, colour, name, start, end}: Timelin
     top: 0
   }
 
+  // const shortPress = useShortPress(() => {router.push(path)})
+
   return (
-    <div className={`${colour} h-full
+    <div className={`${colour} h-full rounded-md
       absolute`}
       style={style}
       key={name}>
