@@ -15,15 +15,15 @@ interface MapElementProps extends MapElementInterface {
 
 // TODO: use svg paths
 
-export default function MapElement ({name, shape, pos, area, zoom, link, startTime, endTime} : MapElementProps) {
+export default function MapElement ({name, shape, area, zoom, link, startTime, endTime} : MapElementProps) {
   const zoomTransition = 2
 
   const style = {
     opacity: zoom > zoomTransition ? 1 : 0,
-    left: pos.x,
-    top: pos.y,
-    height: shape.h,
-    width: shape.w
+    left: 10,
+    top: 10,
+    height: 100,
+    width: 100
   }
 
   const router = useRouter()

@@ -13,8 +13,16 @@ interface MapAreaInterface {
   colour: string
   capacity: number
   pop: number
-  elements: MapElementInterface[]
+  elements: {data: {
+    id: number 
+    attributes: MapElementInterface
+    }[]
+  }
 }
 
+interface MapDataInterface {
+  id: number
+  attributes: MapAreaInterface
+}
 
-export type { MapElementInterface, MapAreaInterface }
+export type { MapElementInterface, MapAreaInterface, MapDataInterface }

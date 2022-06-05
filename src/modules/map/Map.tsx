@@ -7,27 +7,11 @@ import Image from 'next/image'
 import { MapArea, HeatmapArea } from "./MapArea";
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { loadMapData } from "./fetchMapData";
+import { MapDataInterface } from "./mapTypes";
+import { GetStaticProps } from "next";
 
-const mapElements = [
-  {
-    name: "area1",
-    shape: "M 0 30 L 30 30 L 35 50 L 0 50",
-    colour: "bg-blue-500",
-    capacity: 100,
-    pop: 80,
-    elements: [
-      {
-        name: "area1el1",
-        shape: {h: 100, w: 100},
-        pos: {x: 30, y: 30},
-        link: "firstsection",
-      }
-    ]
-  }
-]
-
-
-export default function Map ({heatmap=false}) {
+export default function Map ({heatmap=false, mapData} : {mapData: MapDataInterface[], heatmap: boolean}) {
   // State used to record zoom level
   const [zoom, setZoom] = useState(1)
 
@@ -43,7 +27,6 @@ export default function Map ({heatmap=false}) {
     }
   } 
 
-  // console.log('ref', ref?.state.scale)
   return (
     <TransformWrapper
       ref={ (ref)=> typesafeSetZoom(ref?.state.scale) }>
@@ -59,18 +42,18 @@ export default function Map ({heatmap=false}) {
               viewBox="0 0 100 100"
             >
               <filter id="blur"><feGaussianBlur stdDeviation={1} /></filter>
-              {mapElements.map((data, index) => {
+              {/* {mapData.map((data, index:any) => {
                 return (
                   <HeatmapArea key={data.name} zoom={zoom} {...data}/>
                 )
               })
-            }
+            } */}
 
             </svg>
           ) : (
-          mapElements.map((data, index) => {
+            mapData.map((data, index) => {
               return (
-                <MapArea key={index} zoom={zoom} {...data} />
+                <MapArea key={index} zoom={zoom} {...data.attributes} />
               )
             })
           )}

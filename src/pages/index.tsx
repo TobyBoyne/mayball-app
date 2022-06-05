@@ -1,18 +1,21 @@
-import type { NextPage } from 'next'
 import Map from '../modules/map/Map'
 import Layout from '../common/components/Layout'
+import { loadMapData } from '../modules/map/fetchMapData'
+import { MapDataInterface } from '../modules/map/mapTypes'
 
-
-const Home: NextPage = () => {
+export default function Home ({mapData}: {mapData: MapDataInterface[]}) {
   const mapSize = {
     height: 600, width: 800
   }
   return (
     <Layout title="Home">
-      <Map />
+      <Map mapData={mapData} heatmap={false}/>
       Home Content
     </Layout>
   )
 }
 
-export default Home
+export async function getStaticProps() {
+  const mapData = await loadMapData()
+  return { props: { mapData } }
+}
