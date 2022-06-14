@@ -17,5 +17,8 @@ export default function Home ({mapData}: {mapData: MapDataInterface[]}) {
 
 export async function getStaticProps() {
   const mapData = await loadMapData()
-  return { props: { mapData } }
+  return { 
+    props: { mapData }, 
+    revalidate: 3600 //TODO: reduce revalidation time
+  } 
 }

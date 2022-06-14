@@ -1,7 +1,10 @@
 interface MapElementInterface {
   name: string
-  shape: {w: number, h: number}
-  pos: {x: number, y: number}
+  shape: string
+  width: number
+  height: number
+  x: number
+  y: number
   link?: string
   startTime?: Date
   endTime?: Date

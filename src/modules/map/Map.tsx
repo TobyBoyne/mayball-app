@@ -51,11 +51,16 @@ export default function Map ({heatmap=false, mapData} : {mapData: MapDataInterfa
 
             </svg>
           ) : (
-            mapData.map((data, index) => {
+            <svg 
+            className="w-full h-full absolute"
+            viewBox="85 -2 1300 1000" // TODO: configure these values
+            >
+            {mapData.map((data, index) => {
               return (
                 <MapArea key={index} zoom={zoom} {...data.attributes} />
               )
-            })
+            })}
+            </svg>
           )}
       </TransformComponent>
     </TransformWrapper>

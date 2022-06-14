@@ -13,14 +13,14 @@ interface MapAreaProps extends MapAreaInterface {
 export function MapArea ( {name, colour, elements, pop, capacity, zoom} : MapAreaProps ) {
   
   return (
-    <>
+    <g>
       {elements.data.map((data, index) => {
           return (
             <MapElement zoom={zoom} area={name} key={data.attributes.name} {...data.attributes} />
           )
         })
       }
-    </>
+    </g>
   )
 }
 
