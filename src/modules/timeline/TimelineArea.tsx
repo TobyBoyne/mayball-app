@@ -5,6 +5,7 @@
 import TimelineEvent from "./TimelineEvent"
 import TimelineContext from "./TimelineContext"
 import { useContext } from "react"
+import { MapAreaInterface } from "../map/mapTypes"
 
 type EventDetails = {
   // children: ReactNode
@@ -17,10 +18,10 @@ type TimelineAreaProps = {
   // children: ReactNode
   name: string
   colour: string
-  events: EventDetails[]
+  elements: EventDetails[]
 } 
 
-export default function TimelineArea ({name, colour, events}: TimelineAreaProps) {
+export default function TimelineArea ({name, colour, elements}: MapAreaInterface) {
   const timeline = useContext(TimelineContext)
 
   return (
@@ -31,12 +32,12 @@ export default function TimelineArea ({name, colour, events}: TimelineAreaProps)
         border-red-500 border-2" 
         style={{left: timeline.scale * (timeline.time - timeline.earliest)}} 
       />
-      {events.map((data, index) => {
+      {elements.data.map((data, index) => {
         return (
-          <TimelineEvent colour={colour} key={data.name}
-          {...data}/>
+          <TimelineEvent colour={colour} key={index}
+          {...data.attributes}/>
         )
       })}
     </div>
-  )
+)
 }

@@ -3,10 +3,12 @@
  */
 
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
-import { useState, useContext, createContext } from "react";
+import { useState, useContext, useRef, useCallback } from "react";
  
 import TimelineArea from "./TimelineArea";
 import TimelineContext from "./TimelineContext";
+
+import { MapDataInterface } from "../map/mapTypes";
 
 // Example data - to be moved to proper file format
 // each object should be the same format as TimelineAreaProps
@@ -52,15 +54,14 @@ const areaEvents = [
 const timelineData = {
   scale: 0.02 / 1000, // pixels per ms
   curTimeOffset: 1000*60*30, // 30 minutes
-  earliest: (new Date("2022-06-23T19:00")).getTime(),
+  earliest: (new Date("2022-06-23T12:00")).getTime(),
   latest: (new Date("2022-06-24T06:00")).getTime(),
 }
 
-export default function Timeline () {
+export default function Timeline ({eventsData}: {eventsData: MapDataInterface[]}) {
 
   const [time, setTime] = useState((new Date("2022-06-23T23:00")).getTime())
   const timeline = useContext(TimelineContext)
-  // TODO: scroll to red line
   
 //   TODO: make custom hook
 //   useEffect(() => {
@@ -72,16 +73,29 @@ export default function Timeline () {
 //     clearInterval(timer); // Return a funtion to clear the timer so that it will stop being called on unmount
 //   }
 // }, []);
+
+  // scroll to current position
+  const ref = useRef(null)
+  const scrollPos = (time - timelineData.earliest - timelineData.curTimeOffset) * timelineData.scale
+  console.log(timelineData.earliest)
+  const setRef = useCallback((node: HTMLDivElement) => {
+    if (node) {
+      node.scrollLeft = scrollPos
+    }
+    ref.current = node
+  }, [])
+
+  // endscroll
   
   const fullWidth = (timelineData.latest - timelineData.earliest) * timelineData.scale
    return (      
         <TimelineContext.Provider value={{...timelineData, time:time}}>
-          <div className="w-2/3 overflow-x-scroll">
+          <div className="w-2/3 overflow-x-scroll" ref={setRef}>
             <div className="flex flex-col gap-3"
               style={{height: 600, width: fullWidth}}>
-              {areaEvents.map( (data, index) => {
+              {eventsData.map( (data, index) => {
                 return (
-                <TimelineArea key={data.name} {...data}/>
+                <TimelineArea key={index} {...data.attributes}/>
                 )
               })}
             </div>

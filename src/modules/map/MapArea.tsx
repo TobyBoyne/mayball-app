@@ -16,7 +16,7 @@ export function MapArea ( {name, colour, elements, pop, capacity, zoom} : MapAre
     <g>
       {elements.data.map((data, index) => {
           return (
-            <MapElement zoom={zoom} area={name} key={data.attributes.name} {...data.attributes} />
+            <MapElement zoom={zoom} area={name} colour={colour} key={data.attributes.name} {...data.attributes} />
           )
         })
       }

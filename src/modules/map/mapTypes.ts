@@ -6,8 +6,8 @@ interface MapElementInterface {
   x: number
   y: number
   link?: string
-  startTime?: Date
-  endTime?: Date
+  startTime?: string
+  endTime?: string
 }
 
 interface MapAreaInterface {
