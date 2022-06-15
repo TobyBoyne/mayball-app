@@ -82,7 +82,7 @@ export default function Timeline ({eventsData}: {eventsData: MapDataInterface[]}
     if (node) {
       node.scrollLeft = scrollPos
     }
-    ref.current = node
+    // ref.current = node
   }, [])
 
   // endscroll
