@@ -75,14 +75,14 @@ export default function Timeline ({eventsData}: {eventsData: MapDataInterface[]}
 // }, []);
 
   // scroll to current position
-  const ref = useRef(null)
+  const ref = useRef<HTMLDivElement | null>(null)
   const scrollPos = (time - timelineData.earliest - timelineData.curTimeOffset) * timelineData.scale
   console.log(timelineData.earliest)
   const setRef = useCallback((node: HTMLDivElement) => {
     if (node) {
       node.scrollLeft = scrollPos
     }
-    // ref.current = node
+    ref.current = node
   }, [])
 
   // endscroll

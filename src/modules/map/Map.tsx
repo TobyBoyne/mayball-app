@@ -16,9 +16,9 @@ export default function Map ({heatmap=false, mapData} : {mapData: MapDataInterfa
   const [zoom, setZoom] = useState(1)
 
   const [isHeatmap, setIsHeatmap] = useState(heatmap)
-
+  console.log(mapData.filter((a) => a.attributes.name=="Main Stage"))
   const mapSize = {
-    height: 600, width: 1006
+    height: 1000, width: 1300
   }
 
   const typesafeSetZoom = (scale: number | undefined) => {
@@ -29,9 +29,14 @@ export default function Map ({heatmap=false, mapData} : {mapData: MapDataInterfa
 
   return (
     <TransformWrapper
-      ref={ (ref)=> typesafeSetZoom(ref?.state.scale) }>
-      <TransformComponent>
-          <Image src={"/site_plan.png"} width={mapSize.width} height={mapSize.height}
+      ref={ (ref)=> typesafeSetZoom(ref?.state.scale) }
+    >
+      <TransformComponent
+        wrapperStyle={
+          {width: "max(90%, 1300px)"}
+        }  
+      >
+          <Image src={"/site_plan_blank.png"} width={mapSize.width} height={mapSize.height}
             alt="Placeholder image for site plan"
             className="relative"
           />
@@ -53,8 +58,8 @@ export default function Map ({heatmap=false, mapData} : {mapData: MapDataInterfa
           ) : (
             <svg 
             className="w-full h-full absolute"
-            viewBox="85 -2 1300 1000" // TODO: configure these values
-            // viewBox="-50 0 1300 1000" // TODO: configure these values
+            viewBox="0 0 1300 1000" // TODO: configure these values
+            // viewBox="-90 0 1300 1000" // TODO: configure these values
             >
             {mapData.map((data, index) => {
               return (

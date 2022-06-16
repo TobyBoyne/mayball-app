@@ -7,6 +7,7 @@ import useShortPress from "../../common/hooks/useShortPress"
 import { useRouter } from "next/router"
 import { motion } from "framer-motion"
 import { MapElementInterface } from "./mapTypes"
+import { useEffect, useState } from 'react'
 
 interface MapElementProps extends MapElementInterface {
   area: string
@@ -20,8 +21,11 @@ export default function MapElement ({name, shape, area, colour, zoom, link, widt
   const zoomTransition = 2
   const isActive = zoom > zoomTransition
   const style = {
-    opacity: isActive ? 1 : 0.2,
+    opacity: isActive ? 0.5 : 0,
   }
+
+  const [time, setTime] = useState((new Date("2022-06-23T23:00")).getTime())
+  const [currentlyOpen, setCurrentlyOpen] = useState(true)
 
   const rectShape = {
     width: width,
@@ -29,11 +33,14 @@ export default function MapElement ({name, shape, area, colour, zoom, link, widt
     x: x,
     y: y
   }
+  // TODO: handle time properly
+  const start = (new Date(startTime as string)).getTime()
+  const end = (new Date(endTime as string)).getTime()
 
-  const router = useRouter()
+  useEffect(() => {
+    setCurrentlyOpen((start < time) && (time < end) )
+  }, [time])
 
-  const path = `/areas/${area}${link ? "#" + link : ""}`
-  const shortPress = useShortPress(() => {router.push(path)})
   return (
       // TODO: circles have rx=1000
       <g
@@ -45,14 +52,13 @@ export default function MapElement ({name, shape, area, colour, zoom, link, widt
         transition-opacity duration-300
         ${isActive ? "pointer-events-auto" : "pointer-events-none"}`}
       style={style}
-      {...shortPress}
       {...rectShape}
-
+      display={currentlyOpen ? "inline" : "none"}
       rx={width / 10}
       fill={colour}
       />
       
-      <text className="text-2xl font-bold" x={x} y={y} fill={"black"}>{name}</text>
+      {/* <text className="text-2xl font-bold" x={x} y={y} fill={"black"}>{name}</text> */}
       </g>
 
 

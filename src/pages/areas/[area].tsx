@@ -1,14 +1,37 @@
 import Layout from '../../common/components/Layout'
 import { useRouter } from 'next/router'
+import { loadMapData } from '../../modules/map/fetchMapData'
+import { MapAreaInterface } from '../../modules/map/mapTypes'
 
-export default function Area() {
+export default function Area({ area }: {area: MapAreaInterface}) {
   const router = useRouter()
-  const { area } = router.query
+  const { q } = router.query
   return (
-    <Layout title={area as string}>
-      <p> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sapiente repudiandae ad adipisci non voluptatem nesciunt sint mollitia aspernatur officia culpa excepturi at tenetur, veritatis molestias quos laudantium unde nulla sunt labore minima, ipsum et. Harum molestiae aspernatur, nam expedita delectus nihil eum reiciendis, velit in, maiores enim? Consectetur fugiat, ab iste blanditiis nostrum iure consequuntur odit, quibusdam aut exercitationem odio tempore eaque vitae, earum recusandae. Ipsam sed doloremque, architecto a ullam mollitia! Ratione accusamus explicabo quo optio ad, soluta placeat ullam corporis reiciendis facilis. Vitae corrupti beatae nesciunt necessitatibus, eos molestiae, dolores suscipit modi facere quisquam esse quam cupiditate quibusdam. </p>
-      <h2 id="firstsection">First element</h2>
-      <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sequi, aliquam laboriosam? Aliquid debitis quam earum repudiandae animi dicta voluptatem, officiis suscipit eaque vitae eveniet quae fugit quibusdam rem optio quaerat mollitia fugiat saepe quod magni est beatae blanditiis alias vero? Possimus suscipit sint porro pariatur unde atque sequi, nesciunt delectus adipisci magnam est fugit dolorem voluptatum quia veniam reprehenderit nemo ipsam laborum debitis accusamus. Optio porro animi autem! Itaque explicabo quia eum recusandae pariatur est asperiores animi, earum quasi suscipit nam magni delectus harum illum maxime, laudantium, nisi ad incidunt assumenda dolor mollitia deserunt minus cumque sunt. Delectus, culpa autem!</p>
+    <Layout title={q as string}>
+      <p>Text! {area?.name} </p>
     </Layout>
   )
+}
+
+export async function getStaticProps({ params } : {params: any}) {
+  const mapData = await loadMapData()
+  // const area = mapData.filter
+  return { 
+    props: { 
+      area: mapData.filter((area) => {area.attributes.name=="Paddock"}) }, 
+    revalidate: 3600 //TODO: reduce revalidation time
+  } 
+}
+
+export async function getStaticPaths() {
+  const mapData = await loadMapData()
+  const s = {
+    paths: mapData.map((area) => `/areas/${area.attributes.name}`) || [],
+    fallback: true,
+  }
+  console.log(s)
+  return {
+    paths: mapData.map((area) => `/areas/${area.attributes.name}`) || [],
+    fallback: true,
+  }
 }

@@ -31,8 +31,11 @@ export default function Layout( {children, title} : LayoutProps ) {
         transition={{type:"linear"}} 
         className='max-w-prose mx-auto my-10
           flex flex-col items-center'
+        style={{
+          maxWidth: "min(65ch, 80%)"
+        }}
       >
-        <h1 className='text-center text-7xl my-10'>{title}</h1>
+        {/* <h1 className='text-center text-3xl my-10'>{title}</h1> */}
         {children}
       </motion.main>
       <Footer />

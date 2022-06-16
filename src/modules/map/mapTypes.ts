@@ -16,6 +16,7 @@ interface MapAreaInterface {
   colour: string
   capacity: number
   pop: number
+  content: string
   elements: {data: {
     id: number 
     attributes: MapElementInterface

@@ -3,6 +3,9 @@
 */
 import MapElement from "./MapElement"
 import { MapAreaInterface } from "./mapTypes"
+import useShortPress from "../../common/hooks/useShortPress"
+import { useRouter } from "next/router"
+
 
 interface MapAreaProps extends MapAreaInterface {
   zoom: number
@@ -10,10 +13,25 @@ interface MapAreaProps extends MapAreaInterface {
 
 // TODO: use <Link> objects for linking
 
-export function MapArea ( {name, colour, elements, pop, capacity, zoom} : MapAreaProps ) {
-  
+export function MapArea ( {name, colour, elements, shape, pop, capacity, zoom} : MapAreaProps ) {
+  const path = `/areas/${name}`
+  const router = useRouter()
+  const shortPress = useShortPress(() => {router.push(path)})
+
   return (
-    <g>
+    <g
+      {...shortPress}
+    >
+      <polygon
+        points={shape}
+        fill={colour}
+        opacity={0.3}
+        stroke={colour}
+        strokeLinejoin={"round"}
+        strokeWidth={20}
+      >
+
+      </polygon>
       {elements.data.map((data, index) => {
           return (
             <MapElement zoom={zoom} area={name} colour={colour} key={data.attributes.name} {...data.attributes} />
