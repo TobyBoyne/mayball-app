@@ -5,18 +5,26 @@ import MapElement from "./MapElement"
 import { MapAreaInterface } from "./mapTypes"
 import useShortPress from "../../common/hooks/useShortPress"
 import { useRouter } from "next/router"
+import { Dispatch, SetStateAction } from "react"
 
 
 interface MapAreaProps extends MapAreaInterface {
   zoom: number
+  activeArea: boolean
+  setSelectedElement: Dispatch<SetStateAction<{
+    name: string;
+    description: string;
+    x: number;
+    y: number;
+}>>
 } 
 
 // TODO: use <Link> objects for linking
 
-export function MapArea ( {name, colour, elements, shape, pop, capacity, zoom} : MapAreaProps ) {
-  const path = `/areas/${name}`
+export function MapArea ( {name, slug, colour, elements, shape, pop, capacity, setSelectedElement, activeArea, zoom} : MapAreaProps ) {
+  const path = `/areas/${slug}`
   const router = useRouter()
-  const shortPress = useShortPress(() => {router.push(path)})
+  const shortPress = activeArea ? {} : useShortPress(() => {router.push(path)})
 
   return (
     <g
@@ -34,7 +42,7 @@ export function MapArea ( {name, colour, elements, shape, pop, capacity, zoom} :
       </polygon>
       {elements.data.map((data, index) => {
           return (
-            <MapElement zoom={zoom} area={name} colour={colour} key={data.attributes.name} {...data.attributes} />
+            <MapElement zoom={zoom} area={name} colour={colour} key={data.attributes.name} activeArea={activeArea} setSelectedElement={setSelectedElement} {...data.attributes} />
           )
         })
       }

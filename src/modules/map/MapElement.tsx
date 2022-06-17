@@ -6,23 +6,28 @@ import Link from 'next/link'
 import useShortPress from "../../common/hooks/useShortPress"
 import { useRouter } from "next/router"
 import { motion } from "framer-motion"
+import styles from "./map.module.css"
 import { MapElementInterface } from "./mapTypes"
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Dispatch, SetStateAction } from 'react'
 
 interface MapElementProps extends MapElementInterface {
   area: string
   zoom: number 
   colour: string
+  activeArea: boolean
+  setSelectedElement: Dispatch<SetStateAction<{
+    name: string;
+    description: string;
+    x: number;
+    y: number;
+}>>
 }
 
 // TODO: use svg paths
 
-export default function MapElement ({name, shape, area, colour, zoom, link, width, height, x, y, startTime, endTime} : MapElementProps) {
+export default function MapElement ({name, description, shape, area, colour, zoom, activeArea, setSelectedElement, width, height, x, y, startTime, endTime} : MapElementProps) {
   const zoomTransition = 2
   const isActive = zoom > zoomTransition
-  const style = {
-    opacity: isActive ? 0.5 : 0,
-  }
 
   const [time, setTime] = useState((new Date("2022-06-23T23:00")).getTime())
   const [currentlyOpen, setCurrentlyOpen] = useState(true)
@@ -45,20 +50,18 @@ export default function MapElement ({name, shape, area, colour, zoom, link, widt
       // TODO: circles have rx=1000
       <g
         className='transition-opacity duration-300'
-        style={style}
+        onClick={() => setSelectedElement({name, description, x, y})}
       >
       <rect
       className={`
         transition-opacity duration-300
         ${isActive ? "pointer-events-auto" : "pointer-events-none"}`}
-      style={style}
+      fillOpacity={isActive ? 0.5 : 0}
       {...rectShape}
       display={currentlyOpen ? "inline" : "none"}
       rx={width / 10}
       fill={colour}
       />
-      
-      {/* <text className="text-2xl font-bold" x={x} y={y} fill={"black"}>{name}</text> */}
       </g>
 
 

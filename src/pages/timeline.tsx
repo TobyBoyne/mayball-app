@@ -7,7 +7,7 @@ import { MapDataInterface } from '../modules/map/mapTypes'
 export default function TimelinePage({mapData}: {mapData: MapDataInterface[]}) {
   return (
     <Layout title={"Timeline"}>
-    <Timeline eventsData={mapData}/>
+      <Timeline eventsData={mapData}/>
     </Layout>
   )
 }

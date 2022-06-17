@@ -1,37 +1,49 @@
 import Layout from '../../common/components/Layout'
-import { useRouter } from 'next/router'
-import { loadMapData } from '../../modules/map/fetchMapData'
-import { MapAreaInterface } from '../../modules/map/mapTypes'
+import styles from './areastyle.module.css'
+import { StaticMap } from "../../modules/map/Map"
+import { loadAreaData, loadMapData } from '../../modules/map/fetchMapData'
+import { MapAreaInterface, MapDataInterface } from '../../modules/map/mapTypes'
 
-export default function Area({ area }: {area: MapAreaInterface}) {
-  const router = useRouter()
-  const { q } = router.query
+export default function Area({ mapData, areaData }: {mapData: MapDataInterface[], areaData: MapAreaInterface}) {
+
   return (
-    <Layout title={q as string}>
-      <p>Text! {area?.name} </p>
+    <Layout title={areaData.name}>
+      <h1
+        className="text-3xl font-semibold"
+      >
+        {areaData.displayName}
+      </h1>
+
+      <StaticMap mapData={mapData}/>
+
+      <div
+        className={styles.area}
+        dangerouslySetInnerHTML={{__html: areaData.content}}
+      />
     </Layout>
   )
 }
 
 export async function getStaticProps({ params } : {params: any}) {
   const mapData = await loadMapData()
-  // const area = mapData.filter
+  const areaData = await loadAreaData(params.area)
   return { 
-    props: { 
-      area: mapData.filter((area) => {area.attributes.name=="Paddock"}) }, 
+    props: {
+      mapData,
+      areaData
+    }, 
     revalidate: 3600 //TODO: reduce revalidation time
   } 
 }
 
 export async function getStaticPaths() {
   const mapData = await loadMapData()
-  const s = {
-    paths: mapData.map((area) => `/areas/${area.attributes.name}`) || [],
-    fallback: true,
-  }
-  console.log(s)
+  const paths = mapData.map((a) => ({
+    params: {area: a.attributes.slug}
+  }))
+
   return {
-    paths: mapData.map((area) => `/areas/${area.attributes.name}`) || [],
-    fallback: true,
+    paths,
+    fallback: false,
   }
 }

@@ -1,5 +1,6 @@
 interface MapElementInterface {
   name: string
+  description: string
   shape: string
   width: number
   height: number
@@ -13,10 +14,12 @@ interface MapElementInterface {
 interface MapAreaInterface {
   name: string
   shape: string
+  slug: string
   colour: string
   capacity: number
   pop: number
   content: string
+  displayName: string
   elements: {data: {
     id: number 
     attributes: MapElementInterface
