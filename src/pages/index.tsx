@@ -1,24 +1,57 @@
-import Map from '../modules/map/Map'
 import Layout from '../common/components/Layout'
-import { loadMapData } from '../modules/map/fetchMapData'
-import { MapDataInterface } from '../modules/map/mapTypes'
+import MainPoster from "../../public/img/once-upon-a-time.png"
+import Image from 'next/image'
+import Link from 'next/link'
+import styles from './Home.module.css'
 
-export default function Home ({mapData}: {mapData: MapDataInterface[]}) {
-  const mapSize = {
-    height: 600, width: 800
-  }
+import { FaMap, FaClock } from 'react-icons/fa'
+
+import { motion } from 'framer-motion'
+import { ReactNode } from 'react'
+
+export default function Home () {
   return (
+    <>
+    <motion.div
+        className={styles.poster}
+      >
+        <Image src={MainPoster}
+          layout="fill"
+          objectFit='contain'
+          objectPosition={"center"}/>
+      </motion.div>
     <Layout title="Home">
-      <Map mapData={mapData} heatmap={false}/>
-      Home Content
+      
+      <h1
+        className={styles.title}
+      >
+        Welcome to the Downing May Ball
+      </h1>
+      
+      <div
+        className={styles.allCards}
+      >
+        <HomeLink href="/map">
+          <FaMap /> Map
+        </HomeLink>
+        <HomeLink href="/timeline">
+          <FaClock /> Timeline
+        </HomeLink>
+      </div>
+
     </Layout>
+    </>
   )
 }
 
-export async function getStaticProps() {
-  const mapData = await loadMapData()
-  return { 
-    props: { mapData }, 
-    revalidate: 3600 //TODO: reduce revalidation time
-  } 
+function HomeLink ({href, children} : {href: string, children: ReactNode}) {
+  return (
+    <Link href={href}>
+      <a
+        className={styles.card}
+      >
+        {children}
+      </a>
+    </Link>
+  )
 }

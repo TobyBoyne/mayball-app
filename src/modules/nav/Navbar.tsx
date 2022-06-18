@@ -24,6 +24,7 @@ const variants = {
 
 const navs = [
   {name: "Home", slug: "/"},
+  {name: "Map", slug: "/map"},
   // {name: "AreaOne", slug: "/areas/area1"},
   // {name: "AreaTwo", slug: "/areas/area2"},
   {name: "Timeline", slug: "/timeline"},

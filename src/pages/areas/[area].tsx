@@ -1,6 +1,6 @@
 import Layout from '../../common/components/Layout'
 import styles from './areastyle.module.css'
-import { StaticMap } from "../../modules/map/Map"
+import Map from "../../modules/map/Map"
 import { loadAreaData, loadMapData } from '../../modules/map/fetchMapData'
 import { MapAreaInterface, MapDataInterface } from '../../modules/map/mapTypes'
 
@@ -14,7 +14,7 @@ export default function Area({ mapData, areaData }: {mapData: MapDataInterface[]
         {areaData.displayName}
       </h1>
 
-      <StaticMap mapData={mapData}/>
+      <Map mapData={mapData}/>
 
       <div
         className={styles.area}
