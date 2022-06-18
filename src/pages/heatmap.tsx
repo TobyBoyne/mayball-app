@@ -1,4 +1,4 @@
-import Map from '../modules/map/Map'
+import FramerMap from '../modules/map/FramerMap'
 import Layout from '../common/components/Layout'
 import { loadMapData } from '../modules/map/fetchMapData'
 import { MapDataInterface } from '../modules/map/mapTypes'
@@ -9,7 +9,7 @@ export default function Home ({mapData}: {mapData: MapDataInterface[]}) {
   }
   return (
     <Layout title="Heatmap">
-      <Map mapData={mapData} heatmap={true}/>
+      <FramerMap mapData={mapData}/>
       Home Content
     </Layout>
   )

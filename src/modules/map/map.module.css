@@ -1,6 +1,34 @@
-.map {
+.mapContainer {
   position: relative;
-  width: 600px
+  width: 600px;
+  height: calc(600px / 1.3);
+  overflow: hidden;
+  /* border: 10px solid grey; */
+  box-shadow: 0 0 20px 0 black;
+  border-radius: 10px;
+}
+
+.map {
+  overflow: hidden;
+  
+}
+
+.zoomButton {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background-color: white;
+  box-shadow: 0 0 10px 0;
+  border-radius: 5px;
+  border: 1px solid grey;
+  z-index: 30;
+  top: 10px;
+  right: 10px;
+  opacity: 1;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .tooltip {

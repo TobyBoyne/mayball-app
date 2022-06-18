@@ -14,7 +14,7 @@ interface MapElementProps extends MapElementInterface {
   areaSlug: string
   zoom: number 
   colour: string
-  activeArea: string | null
+  activeArea: string | undefined
   setSelectedElement: Dispatch<SetStateAction<{
     name: string;
     description: string;

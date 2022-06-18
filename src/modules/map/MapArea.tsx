@@ -10,20 +10,25 @@ import { Dispatch, SetStateAction, useEffect } from "react"
 
 interface MapAreaProps extends MapAreaInterface {
   zoom: number
-  activeArea: string | null
-  setActiveArea: Dispatch<SetStateAction<string | null>>
+  activeArea: string | undefined
+  setActiveArea: Dispatch<SetStateAction<string | undefined>>
   setSelectedElement: Dispatch<SetStateAction<{
     name: string;
     description: string;
     x: number;
     y: number;
-}>>
+  }>>
+  setZoomPos: Dispatch<SetStateAction<{
+    x: number;
+    y: number;
+    scale: number;
+  }>>
 } 
 
 // TODO: use <Link> objects for linking
 
 export function MapArea ( {name, slug, colour, elements, shape, pop, capacity, 
-    setSelectedElement, activeArea, setActiveArea, zoom} : MapAreaProps ) {
+    setSelectedElement, activeArea, setActiveArea, zoom, areaZoomPos, setZoomPos} : MapAreaProps ) {
 
   const path = `/map/?area=${slug}`
   const router = useRouter()
@@ -33,11 +38,11 @@ export function MapArea ( {name, slug, colour, elements, shape, pop, capacity,
     router.push(path, undefined, {shallow: true})
   })
 
-  // useEffect(() => {
-  //   if (activeArea == slug) {
-  //     console.log('match')
-  //     zoomToElement("zoomDiv")
-  // }}, [activeArea])
+  useEffect( () => {
+    if (activeArea == slug) { 
+      setZoomPos(areaZoomPos)
+    }
+  }, [activeArea])
 
   return (
     <g

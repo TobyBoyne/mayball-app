@@ -6,6 +6,7 @@ interface MapElementInterface {
   height: number
   x: number
   y: number
+  event_type: string
   link?: string
   startTime?: string
   endTime?: string
@@ -21,6 +22,11 @@ interface MapAreaInterface {
   content: string
   displayName: string
   posterSlug: string
+  areaZoomPos: {
+    x: number
+    y: number
+    scale: number
+  }
   elements: {data: {
     id: number 
     attributes: MapElementInterface

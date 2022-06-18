@@ -6,7 +6,7 @@ import styles from './Home.module.css'
 
 import { FaMap, FaClock } from 'react-icons/fa'
 
-import { motion, useViewportScroll } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { ReactNode } from 'react'
 
 export default function Home () {
@@ -16,6 +16,7 @@ export default function Home () {
         className={styles.poster}
       >
         <Image src={MainPoster}
+          alt="Downing May Ball 2022 Main Poster"
           layout="fill"
           objectFit='contain'
           objectPosition={"center"}/>

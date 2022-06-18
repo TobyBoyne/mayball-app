@@ -3,6 +3,7 @@ import Navbar from '../../modules/nav/Navbar'
 import Footer from './Footer'
 import Head from 'next/head'
 import { motion } from 'framer-motion'
+import BackgroundImage from './BackgroundImage'
 
 
 interface LayoutProps {
@@ -24,7 +25,7 @@ export default function Layout( {children, title} : LayoutProps ) {
       <Head>
         <title>{title} | DCMB 2022</title>
       </Head>
-
+      <BackgroundImage />
       <motion.main
         variants = {variants}
         initial="hidden"

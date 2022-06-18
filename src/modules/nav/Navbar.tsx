@@ -8,6 +8,7 @@ interface NavProps {
   name: string
   slug: string
   onClick?: () => void
+  showMenu: boolean
 }
 
 interface OverlayProps {
@@ -34,7 +35,8 @@ const navs = [
 export default function Navbar () {
   const [showMenu, setShowMenu] = useState(false)
 
-  const onClick = () => setShowMenu(false)
+  const onClick = () => {setShowMenu(false)
+  console.log('click')}
 
   return (
     <header className="z-50 relative">
@@ -45,14 +47,14 @@ export default function Navbar () {
         transition={{type:"linear"}} 
         className={`top-0 left-0 h-screen m-0 fixed
           flex flex-col justify-start items-center
-          bg-gray-900 text-white shadow-lg`}
+          bg-teal-800 text-white shadow-lg`}
         style={{width: sidebarWidth}}
         >
 
         <motion.div 
           className="w-20 h-20 rounded-r-lg 
           absolute -right-20 top-1 z-50
-        bg-blue-600
+        bg-teal-600
           grid justify-center content-center"
           onClick={() => setShowMenu(!showMenu)}
         >
@@ -67,9 +69,9 @@ export default function Navbar () {
             <FaAngleRight size={"2em"}/>
           </motion.div>
         </motion.div>
-
+        
         {navs.map((data, index) => 
-          <NavElement key={data.name} onClick={onClick} {...data} />
+          <NavElement key={data.name} onClick={onClick} showMenu={showMenu} {...data} />
         )}
         <Overlay showMenu={showMenu} setShowMenu={setShowMenu}/>
       </motion.nav>
@@ -77,7 +79,7 @@ export default function Navbar () {
   )
 }
 
-function NavElement ({name, slug, onClick} : NavProps) {
+function NavElement ({name, slug, showMenu, onClick} : NavProps) {
 
   return (
 
@@ -85,7 +87,8 @@ function NavElement ({name, slug, onClick} : NavProps) {
       <Link href={slug}>
         <div 
           onClick={onClick}
-          className="h-20 w-full flex justify-center items-center z-10"
+          className="h-20 w-screen flex justify-center items-center z-10"
+          style={{ pointerEvents: showMenu ? "auto" : "none" }}
         >
           {name}
         </div>

@@ -1,4 +1,5 @@
 import { MapDataInterface, MapAreaInterface } from "./mapTypes"
+import qs from "qs"
 
 export async function loadMapData() {
   // Call an external API endpoint to get all element data
