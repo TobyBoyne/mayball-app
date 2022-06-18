@@ -11,10 +11,10 @@ import { MapElementInterface } from "./mapTypes"
 import { useEffect, useState, Dispatch, SetStateAction } from 'react'
 
 interface MapElementProps extends MapElementInterface {
-  area: string
+  areaSlug: string
   zoom: number 
   colour: string
-  activeArea: boolean
+  activeArea: string | null
   setSelectedElement: Dispatch<SetStateAction<{
     name: string;
     description: string;
@@ -23,11 +23,9 @@ interface MapElementProps extends MapElementInterface {
 }>>
 }
 
-// TODO: use svg paths
-
-export default function MapElement ({name, description, shape, area, colour, zoom, activeArea, setSelectedElement, width, height, x, y, startTime, endTime} : MapElementProps) {
+export default function MapElement ({name, description, shape, areaSlug, colour, zoom, activeArea, setSelectedElement, width, height, x, y, startTime, endTime} : MapElementProps) {
   const zoomTransition = 2
-  const isActive = zoom > zoomTransition
+  const isActive = activeArea == areaSlug
 
   const [time, setTime] = useState((new Date("2022-06-23T23:00")).getTime())
   const [currentlyOpen, setCurrentlyOpen] = useState(true)

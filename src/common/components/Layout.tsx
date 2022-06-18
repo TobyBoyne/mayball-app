@@ -31,7 +31,7 @@ export default function Layout( {children, title} : LayoutProps ) {
         animate="enter"
         exit="exit"
         transition={{type:"linear"}} 
-        className='max-w-prose mx-auto my-10
+        className='mx-auto my-10
           flex flex-col items-center'
         style={{
           maxWidth: "min(65ch, 80%)"

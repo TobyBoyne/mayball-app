@@ -20,6 +20,7 @@ interface MapAreaInterface {
   pop: number
   content: string
   displayName: string
+  posterSlug: string
   elements: {data: {
     id: number 
     attributes: MapElementInterface

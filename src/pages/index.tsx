@@ -6,7 +6,7 @@ import styles from './Home.module.css'
 
 import { FaMap, FaClock } from 'react-icons/fa'
 
-import { motion } from 'framer-motion'
+import { motion, useViewportScroll } from 'framer-motion'
 import { ReactNode } from 'react'
 
 export default function Home () {

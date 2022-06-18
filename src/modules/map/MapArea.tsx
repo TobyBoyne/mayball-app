@@ -5,12 +5,13 @@ import MapElement from "./MapElement"
 import { MapAreaInterface } from "./mapTypes"
 import useShortPress from "../../common/hooks/useShortPress"
 import { useRouter } from "next/router"
-import { Dispatch, SetStateAction } from "react"
+import { Dispatch, SetStateAction, useEffect } from "react"
 
 
 interface MapAreaProps extends MapAreaInterface {
   zoom: number
-  activeArea: boolean
+  activeArea: string | null
+  setActiveArea: Dispatch<SetStateAction<string | null>>
   setSelectedElement: Dispatch<SetStateAction<{
     name: string;
     description: string;
@@ -21,10 +22,22 @@ interface MapAreaProps extends MapAreaInterface {
 
 // TODO: use <Link> objects for linking
 
-export function MapArea ( {name, slug, colour, elements, shape, pop, capacity, setSelectedElement, activeArea, zoom} : MapAreaProps ) {
-  const path = `/areas/${slug}`
+export function MapArea ( {name, slug, colour, elements, shape, pop, capacity, 
+    setSelectedElement, activeArea, setActiveArea, zoom} : MapAreaProps ) {
+
+  const path = `/map/?area=${slug}`
   const router = useRouter()
-  const shortPress = activeArea ? {} : useShortPress(() => {router.push(path)})
+  // const shortPress = activeArea ? {} : useShortPress(() => {router.push(path)})
+  const shortPress = useShortPress(() => {
+    setActiveArea(slug)
+    router.push(path, undefined, {shallow: true})
+  })
+
+  // useEffect(() => {
+  //   if (activeArea == slug) {
+  //     console.log('match')
+  //     zoomToElement("zoomDiv")
+  // }}, [activeArea])
 
   return (
     <g
@@ -42,7 +55,7 @@ export function MapArea ( {name, slug, colour, elements, shape, pop, capacity, s
       </polygon>
       {elements.data.map((data, index) => {
           return (
-            <MapElement zoom={zoom} area={name} colour={colour} key={data.attributes.name} activeArea={activeArea} setSelectedElement={setSelectedElement} {...data.attributes} />
+            <MapElement zoom={zoom} areaSlug={slug} colour={colour} key={data.attributes.name} activeArea={activeArea} setSelectedElement={setSelectedElement} {...data.attributes} />
           )
         })
       }
