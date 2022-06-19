@@ -27,14 +27,13 @@ export default function TimelineArea ({name, colour, elements}: MapAreaInterface
   const timelineElements = elements.data.filter((el) => {
     const event_type = el.attributes.event_type.data?.attributes.name
     return (
-      event_type == "Food" || 
-      event_type == "Drink" || 
-      !el.attributes.onTimeline
+      event_type != "Food" &&
+      event_type != "Drink" && 
+      el.attributes.onTimeline
     )
   }
   )
 
-  console.log(timelineElements)
 
   return (
     <div className="w-full flex-grow bg-slate-200

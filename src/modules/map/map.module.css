@@ -67,6 +67,22 @@
 
 .description {
   width: min(600px, 80vw);
-  height: 100px;
+  /* min-height: 100px; */
   padding: 1em;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+}
+
+.description h1 {
+  font-size: 1.6em;
+}
+
+.description h2 {
+  font-size: 1.2em;
+  font-style: italic;
+}
+
+.description .poster {
+  float: right;
 }

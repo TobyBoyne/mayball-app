@@ -7,8 +7,11 @@ export async function loadMapData() {
     populate: {
       elements: {
         populate: ["event_type"]
+      },
+      poster: {
+        populate: "*"
       }
-    }
+    },
   })
   console.log(`https://downingball-cms.herokuapp.com/api/areas?${query}`)
   const res = await fetch(`https://downingball-cms.herokuapp.com/api/areas?${query}`)
@@ -30,11 +33,11 @@ export async function loadEventsData() {
 export async function loadAreaData(slug: string) {
   // Call an external API endpoint to get a single area
   const query = qs.stringify({
-    populate: {
+    populate: [{
       element: {
         populate: ["event_type"]
       }
-    },
+    }, "poster"],
     filters: {
       slug: [slug]
     }
@@ -43,4 +46,9 @@ export async function loadAreaData(slug: string) {
   const responseData = await res.json()
   const areaData: MapAreaInterface = responseData.data[0]?.attributes
   return areaData
+}
+
+export function getAreaFromSlug(mapData: MapDataInterface[], slug: string) {
+  const area = mapData.filter((v) => v.attributes.slug == slug)[0]?.attributes
+  return area
 }

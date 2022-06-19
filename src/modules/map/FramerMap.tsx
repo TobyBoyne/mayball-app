@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { MapArea, HeatmapArea } from "./MapArea";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { loadMapData } from "./fetchMapData";
+import { loadMapData, getAreaFromSlug } from "./fetchMapData";
 import { MapDataInterface, Selection } from "./mapTypes";
 import { GetStaticProps } from "next";
 import styles from "./map.module.css"
@@ -24,7 +24,6 @@ export default function FramerMap ({mapData} : MapProps) {
   const zoom = 3
   const router = useRouter()
   const { area } = router.query
-
   const [activeArea, setActiveArea] = useState<string | undefined>(area as string)
   const [selectedElement, setSelectedElement] = useState<Selection | undefined>(undefined)
 
@@ -37,7 +36,16 @@ export default function FramerMap ({mapData} : MapProps) {
       setSelectedElement(undefined)
     }
   }, [activeArea])
-  console.log(typeof selectedElement == "undefined" ? "none" : "block")
+
+  useEffect (() => {
+    if (!router.isReady) {return}
+    if (typeof area != "object"){
+      setActiveArea(area)
+    }
+  }, [router.isReady])
+
+  const activeAreaDetails = getAreaFromSlug(mapData, activeArea as string)
+
   return (
   <div 
     className="relative
@@ -48,7 +56,10 @@ export default function FramerMap ({mapData} : MapProps) {
       className={`${styles.mapContainer} ${styles.card}`}
     >
       <Link href="/map">
-        <div className={styles.zoomButton} onClick={() => setActiveArea(undefined)}>
+        <div className={styles.zoomButton} onClick={() => {
+          setActiveArea(undefined)
+          router.push("/map")
+        }}>
           <FaSearchMinus />
         </div>
       </Link>
@@ -92,9 +103,59 @@ export default function FramerMap ({mapData} : MapProps) {
         
       </motion.div>
 
-      {/* Tooltip */}
+      <Tooltip {...{zoomPos, selectedElement}}/>
+      
 
+    </div>
+
+
+    {/* Area detail container */}
+
+    <AnimatePresence exitBeforeEnter>
+      {typeof activeArea != "undefined" &&
       <motion.div
+        className={`${styles.description} ${styles.card}`}
+        exit={{height: 0, paddingBlock: 0}}
+      >
+        {/* Description Text */}
+        <div className="w-2/3">
+          <h1>{activeAreaDetails?.name}</h1>
+          {activeAreaDetails?.displayName &&
+          <h2>'{activeAreaDetails?.displayName}'</h2>
+          }
+          <div dangerouslySetInnerHTML={{__html: activeAreaDetails?.content}} />
+        </div>
+
+        {/* Poster image */}
+        <div
+          className={`absolute
+          w-1/3 h-44 m-0
+          right-0 top-4/5
+          `}
+        >
+          <Image
+            src={`/img/maitrob.png`}
+            layout="fill"
+            objectFit="contain"
+          />
+        </div>
+      </motion.div>
+      }
+      </AnimatePresence>
+
+
+  </div>
+  )
+
+}
+
+
+function Tooltip ({zoomPos, selectedElement}: {
+  zoomPos: {x: number, y: number, scale: number}, 
+  selectedElement: Selection | undefined
+  }) {
+  return (
+    <motion.div
         className={`${styles.card} ${styles.tooltip}`}
         style={{
           opacity: typeof selectedElement == "undefined" ? 0 : 1
@@ -114,22 +175,5 @@ export default function FramerMap ({mapData} : MapProps) {
           : <br />
         }
       </motion.div>
-
-    </div>
-
-    
-
-
-    {/* Area detail container */}
-
-    <AnimatePresence exitBeforeEnter>
-      <motion.div
-        className={`${styles.description} ${styles.card}`}
-      >
-        <p>{activeArea}</p>
-      </motion.div>
-    </AnimatePresence>
-  </div>
   )
-
 }
