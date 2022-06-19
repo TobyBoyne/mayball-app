@@ -39,4 +39,13 @@ interface MapDataInterface {
   attributes: MapAreaInterface
 }
 
-export type { MapElementInterface, MapAreaInterface, MapDataInterface }
+interface Selection {
+  name: string
+  description: string
+  start: string
+  end: string
+  x: number
+  y: number
+}
+
+export type { MapElementInterface, MapAreaInterface, MapDataInterface, Selection }

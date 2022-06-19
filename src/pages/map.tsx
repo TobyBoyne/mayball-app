@@ -10,9 +10,7 @@ export default function Home ({mapData}: {mapData: MapDataInterface[]}) {
   return (
     <>
     <Layout title="Map">
-      {/* <Map mapData={mapData} heatmap={false}/> */}
       <FramerMap mapData={mapData}/>
-      
     </Layout>
     </>
   )

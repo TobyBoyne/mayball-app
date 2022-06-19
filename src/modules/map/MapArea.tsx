@@ -2,7 +2,7 @@
  * Each map area contains many MapElements
 */
 import MapElement from "./MapElement"
-import { MapAreaInterface } from "./mapTypes"
+import { MapAreaInterface, Selection } from "./mapTypes"
 import useShortPress from "../../common/hooks/useShortPress"
 import { useRouter } from "next/router"
 import { Dispatch, SetStateAction, useEffect } from "react"
@@ -12,12 +12,7 @@ interface MapAreaProps extends MapAreaInterface {
   zoom: number
   activeArea: string | undefined
   setActiveArea: Dispatch<SetStateAction<string | undefined>>
-  setSelectedElement: Dispatch<SetStateAction<{
-    name: string;
-    description: string;
-    x: number;
-    y: number;
-  }>>
+  setSelectedElement: Dispatch<SetStateAction<Selection | undefined>>
   setZoomPos: Dispatch<SetStateAction<{
     x: number;
     y: number;
@@ -35,6 +30,7 @@ export function MapArea ( {name, slug, colour, elements, shape, pop, capacity,
   // const shortPress = activeArea ? {} : useShortPress(() => {router.push(path)})
   const shortPress = useShortPress(() => {
     setActiveArea(slug)
+    setSelectedElement(undefined)
     router.push(path, undefined, {shallow: true})
   })
 
@@ -50,11 +46,12 @@ export function MapArea ( {name, slug, colour, elements, shape, pop, capacity,
     >
       <polygon
         points={shape}
-        fill={colour}
+        // fill={colour}
         opacity={0.3}
-        stroke={colour}
+        // stroke={colour}
         strokeLinejoin={"round"}
         strokeWidth={20}
+        className="fill-teal-500 stroke-teal-500"
       >
 
       </polygon>
