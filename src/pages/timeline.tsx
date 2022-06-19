@@ -1,7 +1,7 @@
 import Layout from '../common/components/Layout'
 
 import Timeline from '../modules/timeline/Timeline'
-import { loadMapData } from '../modules/map/fetchMapData'
+import { loadEventsData, loadMapData } from '../modules/map/fetchMapData'
 import { MapDataInterface } from '../modules/map/mapTypes'
 
 export default function TimelinePage({mapData}: {mapData: MapDataInterface[]}) {

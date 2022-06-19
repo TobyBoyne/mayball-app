@@ -10,6 +10,8 @@ import TimelineContext from "./TimelineContext";
 
 import { MapDataInterface } from "../map/mapTypes";
 
+import { loadEventsData } from "../map/fetchMapData";
+
 // Example data - to be moved to proper file format
 // each object should be the same format as TimelineAreaProps
 // events object should be the same format as TimelineEventProps

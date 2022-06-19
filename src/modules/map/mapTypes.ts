@@ -6,7 +6,15 @@ interface MapElementInterface {
   height: number
   x: number
   y: number
-  event_type: string
+  onTimeline?: boolean
+  event_type: {
+    data?: {
+      id: number
+      attributes: {
+        name: string
+      }
+    }
+  }
   link?: string
   startTime?: string
   endTime?: string

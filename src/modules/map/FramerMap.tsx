@@ -37,7 +37,7 @@ export default function FramerMap ({mapData} : MapProps) {
       setSelectedElement(undefined)
     }
   }, [activeArea])
-
+  console.log(typeof selectedElement == "undefined" ? "none" : "block")
   return (
   <div 
     className="relative
@@ -95,28 +95,26 @@ export default function FramerMap ({mapData} : MapProps) {
       {/* Tooltip */}
 
       <motion.div
-          className={`${styles.card} ${styles.tooltip}`}
-          // style={{
-          //   left: `${50 + zoomPos.scale * (selectedElement?.x as number - zoomPos.x) / 13 }%`, 
-          //   top:  `calc(${50 + zoomPos.scale * (selectedElement?.y as number - zoomPos.y) / 10}% + 5px)`,
-          // }}
-          style={{
-            display: selectedElement == undefined ? "none" : "block"
-          }}
+        className={`${styles.card} ${styles.tooltip}`}
+        style={{
+          opacity: typeof selectedElement == "undefined" ? 0 : 1
+        }}
 
-          animate={{
-            left: `${50 + zoomPos.scale * (selectedElement?.x as number - zoomPos.x) / 13 }%`, 
-            top:  `calc(${50 + zoomPos.scale * (selectedElement?.y as number - zoomPos.y) / 10}% + 5px)`,
-            translate:"-50%"
-          }}
-        >
-          <h2>{selectedElement?.name}</h2>
-          <p>{selectedElement?.description}</p>
-          {(selectedElement?.start !== undefined) 
+        animate={{
+          left: `${50 + zoomPos?.scale * (selectedElement?.x as number - zoomPos?.x) / 13 }%`, 
+          top:  `calc(${50 + zoomPos?.scale * (selectedElement?.y as number - zoomPos?.y) / 10}% + 5px)`,
+          translateX: "-50%"
+        }}
+      >
+        <h2>{selectedElement?.name}</h2>
+        <p>{selectedElement?.description}</p>
+        {
+          (typeof selectedElement?.start !== "undefined") 
           ? <p><em>{selectedElement?.start} - {selectedElement?.end}</em></p>
-          : null
+          : <br />
         }
-          </motion.div>
+      </motion.div>
+
     </div>
 
     

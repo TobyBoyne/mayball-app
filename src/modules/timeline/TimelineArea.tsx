@@ -24,6 +24,18 @@ type TimelineAreaProps = {
 export default function TimelineArea ({name, colour, elements}: MapAreaInterface) {
   const timeline = useContext(TimelineContext)
 
+  const timelineElements = elements.data.filter((el) => {
+    const event_type = el.attributes.event_type.data?.attributes.name
+    return (
+      event_type == "Food" || 
+      event_type == "Drink" || 
+      !el.attributes.onTimeline
+    )
+  }
+  )
+
+  console.log(timelineElements)
+
   return (
     <div className="w-full flex-grow bg-slate-200
       relative">
@@ -32,7 +44,7 @@ export default function TimelineArea ({name, colour, elements}: MapAreaInterface
         border-red-500 border-2" 
         style={{left: timeline.scale * (timeline.time - timeline.earliest)}} 
       />
-      {elements.data.map((data, index) => {
+      {timelineElements.map((data, index) => {
         return (
           <TimelineEvent colour={colour} key={index}
           {...data.attributes}/>

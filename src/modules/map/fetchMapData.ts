@@ -10,10 +10,21 @@ export async function loadMapData() {
       }
     }
   })
+  console.log(`https://downingball-cms.herokuapp.com/api/areas?${query}`)
   const res = await fetch(`https://downingball-cms.herokuapp.com/api/areas?${query}`)
   const responseData = await res.json()
   const mapData: MapDataInterface[] = responseData.data
   return mapData
+}
+
+export async function loadEventsData() {
+  const query = qs.stringify({
+    populate: "*"
+  })
+  const res = await fetch(`https://downingball-cms.herokuapp.com/api/elements?${query}`)
+  const responseData = await res.json()
+  const eventData: any = responseData.data
+  return eventData
 }
 
 export async function loadAreaData(slug: string) {
