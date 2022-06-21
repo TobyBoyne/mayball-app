@@ -37,7 +37,7 @@ export default function TimelineEvent ({colour, name, startTime, endTime}: Timel
       style={style}
       className={`${styles.timelineEvent} bg-teal-500`}
     >
-      <div className="sticky w-10 left-0">{name}</div>
+      <div className="w-full left-0">{name}</div>
     </div>
   )
 }

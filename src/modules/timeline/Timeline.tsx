@@ -56,31 +56,35 @@ export default function Timeline ({eventsData}: {eventsData: MapDataInterface[]}
    return (      
     <TimelineContext.Provider value={{...timelineData, time:time}}>
 
-      <div className={`${styles.container} ${styles.card}`}>
+      <div className={`${styles.timelineContainer} ${styles.card}`}
+        ref={setRef}
+      >
 
-        <div className={styles.clock}>
+        <div className={styles.clock}
+          style={{width: fullWidth}}
+        >
         {
           clockTicks.map((timeDelta, index) => {
             return (
               // <div>{data}</div>
-              <ClockTickMajor timeDelta={timeDelta}/>
+              <ClockTickMajor key={index} timeDelta={timeDelta} 
+              scale={timelineData.scale} earliest={timelineData.earliest}/>
             )
           })
         }
 
         </div>
 
-        <ul className={`${styles.labels} ${styles.timeline}`}>
-          <li>Main Stage</li>
-          <li>Second Stage</li>
-          <li>Acoustic Stage</li>
-          <TimelineDivider />
-          <li>Hollywood and Vine</li>
-          <li>Outdoor Cinema</li>
-          <li>Mystery</li>
-        </ul>
+        <div className={`${styles.labels}`}>
+          <div>Main Stage</div>
+          <div>Second Stage</div>
+          <div>Acoustic Stage</div>
+          <div className={styles.timelineDivider} />
+          <div>Hollywood and Vine</div>
+          <div>Outdoor Cinema</div>
+          <div>Mystery</div>
+        </div>
 
-        <div className={`${styles.timelineContainer}`} ref={setRef}>
           <div className={`${styles.timeline}`}
             style={{width: fullWidth}}
           >
@@ -96,7 +100,6 @@ export default function Timeline ({eventsData}: {eventsData: MapDataInterface[]}
           </div>
 
 
-        </div>
       </div>
     </TimelineContext.Provider>
    )
@@ -110,11 +113,21 @@ export default function Timeline ({eventsData}: {eventsData: MapDataInterface[]}
    )
  }
 
- function ClockTickMajor ({timeDelta}: {timeDelta: number}) {
-   const timeDeltams = timeDelta * 1000 * 60 * 60
-   const time = new Date(timelineData.earliest + timeDeltams).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-    console.log(time, timeDeltams)
-    return (
-      <div></div>
-    )
+ function ClockTickMajor ({timeDelta, scale, earliest}: {timeDelta: number, scale: number, earliest: number}) {
+  const timeDeltams = timeDelta * 1000 * 60 * 60
+  const timeObj = new Date(earliest + timeDeltams)
+  const timeStr = `${String(timeObj.getHours()).padStart(2, "0")}:${String(timeObj.getMinutes()).padStart(2, "0")}`
+  const offset = scale * timeDeltams
+  return (
+    // < div />
+    <div
+      className={styles.major}
+      style={{
+        left: offset
+      }}
+    >
+      {timeStr}
+
+    </div>
+  )
  }
