@@ -6,6 +6,7 @@ import TimelineEvent from "./TimelineEvent"
 import TimelineContext from "./TimelineContext"
 import { useContext } from "react"
 import { MapAreaInterface } from "../map/mapTypes"
+import styles from "./Timeline.module.css"
 
 type EventDetails = {
   // children: ReactNode
@@ -36,8 +37,7 @@ export default function TimelineArea ({name, colour, elements}: MapAreaInterface
 
 
   return (
-    <div className="w-full flex-grow bg-slate-200
-      relative">
+    <div className={styles.timelineArea}>
       <div 
         className="w-0 h-full absolute z-40
         border-red-500 border-2" 

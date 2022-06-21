@@ -7,6 +7,7 @@ import router from "next/router"
 import { useContext } from "react"
 import TimelineContext from "./TimelineContext"
 import { MapElementInterface } from "../map/mapTypes"
+import styles from "./Timeline.module.css"
 
 
  interface TimelineEventProps extends MapElementInterface {
@@ -25,17 +26,16 @@ export default function TimelineEvent ({colour, name, startTime, endTime}: Timel
   const style = {
     width: duration,
     left: offset,
-    top: 0,
-    backgroundColor: colour
+    // backgroundColor: colour,
+    
   }
 
   // const shortPress = useShortPress(() => {router.push(path)})
 
   return (
-    <div className="h-full rounded-md
-      absolute
-      flex items-center"
+    <div
       style={style}
+      className={`${styles.timelineEvent} bg-teal-500`}
     >
       <div className="sticky w-10 left-0">{name}</div>
     </div>

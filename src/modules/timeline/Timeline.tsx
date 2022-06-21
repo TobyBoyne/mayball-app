@@ -10,51 +10,14 @@ import TimelineContext from "./TimelineContext";
 
 import { MapDataInterface } from "../map/mapTypes";
 
-// Example data - to be moved to proper file format
-// each object should be the same format as TimelineAreaProps
-// events object should be the same format as TimelineEventProps
-const areaEvents = [
-  {
-    name: "area1",
-    colour: "bg-blue-500",
-    events: [{
-      name: "area1e1",
-      start: "2022-06-23T20:00",
-      end: "2022-06-23T23:00"
-    }]
-  },
+import { getAreaFromSlug } from "../map/fetchMapData";
 
-  {
-    name: "area2",
-    colour: "bg-amber-500",
-    events: [
-      {
-      name: "area2e1",
-      start: "2022-06-23T21:00",
-      end: "2022-06-23T21:45"
-    }, {
-      name: "area2e2",
-      start: "2022-06-23T22:00",
-      end: "2022-06-23T23:30"
-    }
-  ]
-  },
-
-  {
-    name: "area3",
-    colour: "bg-fuchsia-500",
-    events: [{
-      name: "area3e1",
-      start: "2022-06-23T23:30",
-      end: "2022-06-24T06:00"
-    }]
-  },
-]
+import styles from "./Timeline.module.css"
 
 const timelineData = {
-  scale: 0.02 / 1000, // pixels per ms
+  scale: 0.05 / 1000, // pixels per ms
   curTimeOffset: 1000*60*30, // 30 minutes
-  earliest: (new Date("2022-06-23T12:00")).getTime(),
+  earliest: (new Date("2022-06-23T19:00")).getTime(),
   latest: (new Date("2022-06-24T06:00")).getTime(),
 }
 
@@ -85,21 +48,73 @@ export default function Timeline ({eventsData}: {eventsData: MapDataInterface[]}
     ref.current = node
   }, [])
 
+  const clockTicks = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
   // endscroll
   
   const fullWidth = (timelineData.latest - timelineData.earliest) * timelineData.scale
    return (      
-        <TimelineContext.Provider value={{...timelineData, time:time}}>
-          <div className="w-2/3 overflow-x-scroll" ref={setRef}>
-            <div className="flex flex-col gap-3"
-              style={{height: 600, width: fullWidth}}>
-              {eventsData.map( (data, index) => {
-                return (
-                <TimelineArea key={index} {...data.attributes}/>
-                )
-              })}
-            </div>
+    <TimelineContext.Provider value={{...timelineData, time:time}}>
+
+      <div className={`${styles.container} ${styles.card}`}>
+
+        <div className={styles.clock}>
+        {
+          clockTicks.map((timeDelta, index) => {
+            return (
+              // <div>{data}</div>
+              <ClockTickMajor timeDelta={timeDelta}/>
+            )
+          })
+        }
+
+        </div>
+
+        <ul className={`${styles.labels} ${styles.timeline}`}>
+          <li>Main Stage</li>
+          <li>Second Stage</li>
+          <li>Acoustic Stage</li>
+          <TimelineDivider />
+          <li>Hollywood and Vine</li>
+          <li>Outdoor Cinema</li>
+          <li>Mystery</li>
+        </ul>
+
+        <div className={`${styles.timelineContainer}`} ref={setRef}>
+          <div className={`${styles.timeline}`}
+            style={{width: fullWidth}}
+          >
+            <TimelineArea {...getAreaFromSlug(eventsData, "main-stage")}/>
+            <TimelineArea {...getAreaFromSlug(eventsData, "second-stage")}/>
+            <TimelineArea {...getAreaFromSlug(eventsData, "acoustic-stage")}/>
+            
+            <TimelineDivider />
+
+            <TimelineArea {...getAreaFromSlug(eventsData, "hollywood-and-vine")}/>
+            <TimelineArea {...getAreaFromSlug(eventsData, "the-hollywood-bowl")}/>
+            <TimelineArea {...getAreaFromSlug(eventsData, "mystery")}/>
           </div>
-        </TimelineContext.Provider>
+
+
+        </div>
+      </div>
+    </TimelineContext.Provider>
    )
+ }
+
+ function TimelineDivider () {
+   return (
+     <div className={styles.timelineDivider}>
+
+     </div>
+   )
+ }
+
+ function ClockTickMajor ({timeDelta}: {timeDelta: number}) {
+   const timeDeltams = timeDelta * 1000 * 60 * 60
+   const time = new Date(timelineData.earliest + timeDeltams).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+    console.log(time, timeDeltams)
+    return (
+      <div></div>
+    )
  }

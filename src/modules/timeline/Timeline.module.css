@@ -1,0 +1,90 @@
+.card {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 20px 0 black;
+}
+
+.container {
+  width: min(600px, 90%);
+  display: grid;
+  grid-template-columns: 50px auto;
+  grid-template-rows: 50px auto;
+  grid-template-areas: 
+    "topleft clock"
+    "labels main";
+  column-gap: 10px;
+  row-gap: 50px;
+  padding-top: 20px;
+}
+
+.timelineContainer {
+  grid-area: main;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  height: auto;
+  width: 100%;
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.labels {
+  grid-area: labels;
+  flex-grow: 1;
+}
+
+.labels li {
+  height: 100px;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  writing-mode: vertical-rl;
+  line-height: 90%;
+  
+  /* text-orientation: sideways; */
+}
+
+.timelineArea {
+  width: 100%;
+  height: 100px;
+  background-color: aliceblue;
+  position: relative;
+}
+
+.timelineEvent {
+  height: 100%;
+  border-radius: 10px;
+  position:absolute;
+  top: 0;
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  font-size: 1.2em;
+  font-weight: 700;
+  color: white;
+
+  padding-right: 50px;
+}
+
+.clock {
+  width: 100%;
+  height: 100%;
+  background-color: aliceblue;
+  grid-area: clock;
+  position: relative;
+}
+
+.clock .major {
+  color: red;
+}
+
+.timelineDivider {
+  height: 50px;
+}
