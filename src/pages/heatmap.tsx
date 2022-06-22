@@ -1,15 +1,12 @@
-import FramerMap from '../modules/map/FramerMap'
+import Heatmap from '../modules/map/Heatmap'
 import Layout from '../common/components/Layout'
 import { loadMapData } from '../modules/map/fetchMapData'
 import { MapDataInterface } from '../modules/map/mapTypes'
 
 export default function Home ({mapData}: {mapData: MapDataInterface[]}) {
-  const mapSize = {
-    height: 600, width: 800
-  }
   return (
     <Layout title="Heatmap">
-      <FramerMap mapData={mapData}/>
+      <Heatmap mapData={mapData}/>
     </Layout>
   )
 }

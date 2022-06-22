@@ -15,6 +15,10 @@ interface OverlayProps {
   setShowMenu: React.Dispatch<React.SetStateAction<boolean>>
 }
 
+interface HeadBarProps extends OverlayProps {
+  title: string
+}
+
 const sidebarWidth = 300
 
 const variants = {
@@ -31,11 +35,10 @@ const navs = [
   {name: "Heatmap", slug: "/heatmap"},
 ]
 
-export default function Navbar () {
+export default function Navbar ({title}: {title: string}) {
   const [showMenu, setShowMenu] = useState(false)
 
-  const onClick = () => {setShowMenu(false)
-  console.log('click')}
+  const onClick = () => {setShowMenu(false)}
 
   return (
     <header className="z-50 relative">
@@ -43,31 +46,14 @@ export default function Navbar () {
         variants={variants}
         initial="hidden"
         animate={showMenu ? "show" : "hidden"}
-        transition={{type:"linear"}} 
+        transition={{duration:0.4}} 
         className={`top-0 left-0 h-screen m-0 fixed
           flex flex-col justify-start items-center
           bg-teal-800 text-white shadow-lg`}
         style={{width: sidebarWidth}}
         >
 
-        <motion.div 
-          className="w-20 h-20 rounded-r-lg 
-          absolute -right-20 top-1 z-50
-        bg-teal-600
-          grid justify-center content-center"
-          onClick={() => setShowMenu(!showMenu)}
-        >
-          <motion.div
-            variants={{
-            hidden:{rotate:0},
-            show:{rotate:180}
-          }}
-          initial="hidden"
-          animate={showMenu ? "show" : "hidden"}
-          >
-            <FaAngleRight size={"2em"}/>
-          </motion.div>
-        </motion.div>
+        <HeadBar showMenu={showMenu} setShowMenu={setShowMenu} title={title} />
         
         {navs.map((data, index) => 
           <NavElement key={data.name} onClick={onClick} showMenu={showMenu} {...data} />
@@ -104,6 +90,57 @@ function NavDivider () {
   )
 }
 
+function HeadBar ({showMenu, setShowMenu, title}: HeadBarProps) {
+  const textVariants = {
+    hidden: { opacity: 0, x: 50, y: 0 },
+    enter: { opacity: 1, x: 0, y: 0 },
+    exit: { opacity: 0, x: -50, y: 0 },
+  }
+
+  return (
+    <motion.div 
+      className="w-screen h-16
+      fixed top-0 z-50
+    bg-teal-800 opacity-80
+      flex flex-row items-center"
+      onClick={() => setShowMenu(!showMenu)}
+      variants={{
+        hidden:{left:0},
+        show:{left: sidebarWidth}
+        
+      }}
+      initial="hidden"
+      animate={showMenu ? "show" : "hidden"}
+      transition={{duration:0.4}} 
+    >
+      <motion.div
+        className="ml-2"
+        variants={{
+        hidden:{rotate:0},
+        show:{rotate:180}
+      }}
+      initial="hidden"
+      animate={showMenu ? "show" : "hidden"}
+      transition={{duration:0.4}} 
+      >
+        <FaAngleRight size={"2em"}/>
+      </motion.div>
+      <motion.div
+        className="font-bold text-2xl ml-5"
+        variants={textVariants}
+        initial="hidden"
+        animate="enter"
+        exit="exit"
+        transition={{
+          type: "linear"
+        }}
+      >
+        {title}
+      </motion.div>
+    </motion.div>
+  )
+}
+
 function Overlay ({showMenu, setShowMenu}: OverlayProps) {
   const variants = {
     hidden: {opacity: 0},
@@ -120,10 +157,6 @@ function Overlay ({showMenu, setShowMenu}: OverlayProps) {
       bg-black"
     style={{ pointerEvents: showMenu ? "auto" : "none" }}
     onClick={() => setShowMenu(false)}
-  > 
-    {/* <Link href="/">
-      <div className="fixed h-full w-full"></div>
-    </Link> */}
-  </motion.div>
+  /> 
   )
 }

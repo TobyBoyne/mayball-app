@@ -25,11 +25,10 @@ interface MapAreaInterface {
   shape: string
   slug: string
   colour: string
-  capacity: number
-  pop: number
+  busyness: number
   content: string
   displayName: string
-  posterSlug: string
+  posterSlug: string | null
   areaZoomPos: {
     x: number
     y: number

@@ -33,7 +33,6 @@ export default function Timeline ({eventsData}: {eventsData: MapDataInterface[]}
     // This will trigger a rerender every component that uses the useDate hook.
     const newTime = Math.round(new Date().getTime() / 1000000) * 1000000
     setTime(newTime + futureDelta);
-    console.log(time)
   }, 60*1000);
   return () => {
     clearInterval(timer); // Return a funtion to clear the timer so that it will stop being called on unmount
@@ -43,7 +42,6 @@ export default function Timeline ({eventsData}: {eventsData: MapDataInterface[]}
   // scroll to current position
   const ref = useRef<HTMLDivElement | null>(null)
   const scrollPos = (time - timelineData.earliest - timelineData.curTimeOffset) * timelineData.scale
-  console.log(timelineData.earliest, "now", time)
   const setRef = useCallback((node: HTMLDivElement) => {
     if (node) {
       node.scrollLeft = scrollPos

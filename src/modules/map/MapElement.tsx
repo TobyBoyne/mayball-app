@@ -12,13 +12,13 @@ import { useEffect, useState, Dispatch, SetStateAction } from 'react'
 
 interface MapElementProps extends MapElementInterface {
   areaSlug: string
-  zoom: number 
   colour: string
   activeArea: string | undefined
   setSelectedElement: Dispatch<SetStateAction<Selection | undefined>>
 }
 
-export default function MapElement ({name, description, shape, areaSlug, colour, zoom, activeArea, setSelectedElement, width, height, x, y, startTime, endTime} : MapElementProps) {
+export default function MapElement ({name, description, shape, areaSlug, colour, 
+  activeArea, setSelectedElement, width, height, x, y, startTime, endTime} : MapElementProps) {
   const zoomTransition = 2
   const isActive = activeArea == areaSlug
 

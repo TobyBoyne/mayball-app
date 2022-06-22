@@ -40,7 +40,8 @@
 }
 
 .title {
-  margin-block: 2em;
+  margin-top: 0.6em;
+  margin-bottom: 1em;
   line-height: 1.15;
   font-size: 3rem;
 }
@@ -71,29 +72,6 @@
   justify-content: center;
   flex-wrap: wrap;
   max-width: 800px;
-}
-
-
-.poster {
-  /* w-screen h-screen z-50 pointer-events-none */
-  --clr-poster: #F5F0CB;
-
-  width: 100vw;
-  height: 100vh;
-  z-index: 50;
-
-  pointer-events: none;
-  background-color: #F5F0CB;
-}
-
-.poster::after {
-  content: " ";
-  width: 100vw;
-  height: 100px;
-  background-image: linear-gradient(var(--clr-poster), rgba(238, 2, 2, 0));
-  position: absolute;
-  bottom: -100px;
-  left: 0;
 }
 
 .allCards {

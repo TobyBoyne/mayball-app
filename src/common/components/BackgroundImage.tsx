@@ -22,10 +22,10 @@ export default function BackgroundImage ({ homepage=false }: { homepage?: boolea
         initial={homepage ? "hidden" : "enter"}
         animate="enter"
         exit="exit"
-        transition={{
+        transition={homepage ? {
           delay: 1,
           duration: 1.5
-        }}
+        } : {}}
       >
         <Image src={`/logo.png`}
           layout="responsive"

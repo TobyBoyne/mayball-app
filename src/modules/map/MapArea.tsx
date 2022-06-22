@@ -9,7 +9,6 @@ import { Dispatch, SetStateAction, useEffect } from "react"
 
 
 interface MapAreaProps extends MapAreaInterface {
-  zoom: number
   activeArea: string | undefined
   setActiveArea: Dispatch<SetStateAction<string | undefined>>
   setSelectedElement: Dispatch<SetStateAction<Selection | undefined>>
@@ -22,16 +21,18 @@ interface MapAreaProps extends MapAreaInterface {
 
 // TODO: use <Link> objects for linking
 
-export function MapArea ( {name, slug, colour, elements, shape, pop, capacity, 
-    setSelectedElement, activeArea, setActiveArea, zoom, areaZoomPos, setZoomPos} : MapAreaProps ) {
+export function MapArea ( {name, slug, colour, elements, shape, 
+    setSelectedElement, activeArea, setActiveArea, areaZoomPos, setZoomPos} : MapAreaProps ) {
 
   const path = `/map/?area=${slug}`
   const router = useRouter()
   // const shortPress = activeArea ? {} : useShortPress(() => {router.push(path)})
   const shortPress = useShortPress(() => {
+    if (activeArea != slug) {
+      router.push(path, undefined, {shallow: true})
+    } 
     setActiveArea(slug)
     setSelectedElement(undefined)
-    router.push(path, undefined, {shallow: true})
   })
 
   useEffect( () => {
@@ -57,7 +58,7 @@ export function MapArea ( {name, slug, colour, elements, shape, pop, capacity,
       </polygon>
       {elements.data.map((data, index) => {
           return (
-            <MapElement zoom={zoom} areaSlug={slug} colour={colour} key={data.attributes.name} activeArea={activeArea} setSelectedElement={setSelectedElement} {...data.attributes} />
+            <MapElement areaSlug={slug} colour={colour} key={data.attributes.name} activeArea={activeArea} setSelectedElement={setSelectedElement} {...data.attributes} />
           )
         })
       }
@@ -65,14 +66,30 @@ export function MapArea ( {name, slug, colour, elements, shape, pop, capacity,
   )
 }
 
-export function HeatmapArea ( {shape, pop, capacity}  : MapAreaProps) {
-  const capacityFraction = Math.round(100 * (0.9 - pop / capacity))
+export function HeatmapArea ( {shape, busyness}  : MapAreaInterface) {
+  const capacityFraction = busyness * 20
+
+  const shortPress = useShortPress(() => {
+    console.log(capacityFraction)
+  })
+
   return (
-    <path 
-      fill={`hsl(${capacityFraction} 50% 50% / 0.7)`}
-      filter="url(#blur)"
-      d={shape}
-    />
+    // <path 
+    //   fill={`hsl(${capacityFraction} 50% 50% / 0.7)`}
+    //   filter="url(#blur)"
+    //   d={shape}
+    // />
+
+    <polygon
+        points={shape}
+        // fill={colour}
+        fill={`hsl(${capacityFraction} 50% 50% / 0.7)`}
+        opacity={0.5}
+        // stroke={colour}
+        strokeLinejoin={"round"}
+        strokeWidth={20}
+        {...shortPress}
+      ></polygon>
 
   )
 

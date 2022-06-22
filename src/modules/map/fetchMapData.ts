@@ -13,7 +13,6 @@ export async function loadMapData() {
       }
     },
   })
-  console.log(`https://downingball-cms.herokuapp.com/api/areas?${query}`)
   const res = await fetch(`https://downingball-cms.herokuapp.com/api/areas?${query}`)
   const responseData = await res.json()
   const mapData: MapDataInterface[] = responseData.data

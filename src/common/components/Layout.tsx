@@ -3,6 +3,7 @@ import Footer from './Footer'
 import Head from 'next/head'
 import { motion } from 'framer-motion'
 import BackgroundImage from './BackgroundImage'
+import Navbar from "./Navbar"
 
 
 interface LayoutProps {
@@ -31,6 +32,9 @@ export default function Layout( {children, title, homepage=false} : LayoutProps 
         <title>{title} | DCMB 2022</title>
       </Head>
       <BackgroundImage homepage={homepage}/>
+
+      <Navbar title={title as string}/>
+      
       <motion.main
         variants = {homepage ? homeVariants : variants}
         initial="hidden"
@@ -41,10 +45,11 @@ export default function Layout( {children, title, homepage=false} : LayoutProps 
           delay: homepage ? 2 : 0,
           when: "beforeChildren"
         }} 
-        className='mx-auto my-10
-          flex flex-col items-center'
+        className='mx-auto
+          flex flex-col items-center h-screen'
         style={{
-          maxWidth: "min(65ch, 80%)"
+          maxWidth: "min(65ch, 80%)",
+          marginTop: "96px"
         }}
       >
         {children}

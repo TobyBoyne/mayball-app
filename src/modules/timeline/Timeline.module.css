@@ -18,6 +18,9 @@
   overflow-x: scroll;
   overflow-y: scroll;
   height: 90vh;
+
+  margin-top: 32px;
+  margin-bottom: 32px;
 }
 
 .timeline {

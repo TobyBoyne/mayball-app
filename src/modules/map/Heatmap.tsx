@@ -10,6 +10,7 @@ import styles from "./map.module.css"
 import MapBackground from "../../../public/site_plan_blank.png"
 import { useRouter } from "next/router"
 import { FaSearchMinus } from 'react-icons/fa'
+import postUpdate from "../../common/postUpdate"
 
 interface MapProps {
   mapData: MapDataInterface[]
@@ -19,30 +20,11 @@ interface MapProps {
 // TODO: Use pinch gesture to zoom out
 
 
-export default function FramerMap ({mapData} : MapProps) {
+export default function Heatmap ({mapData} : MapProps) {
+  postUpdate()
   const router = useRouter()
   const { area } = router.query
   const [activeArea, setActiveArea] = useState<string | undefined>(area as string)
-  const [selectedElement, setSelectedElement] = useState<Selection | undefined>(undefined)
-
-  const zoomOut = {x: 1300 / 2, y: 1000 / 2, scale: 1}
-  const [zoomPos, setZoomPos] = useState(zoomOut)
-
-  useEffect( () => {
-    if (activeArea == undefined) { 
-      setZoomPos(zoomOut)
-      setSelectedElement(undefined)
-    }
-  }, [activeArea])
-
-  useEffect (() => {
-    if (!router.isReady) {return}
-    if (typeof area != "object"){
-      setActiveArea(area)
-    }
-  }, [router.isReady])
-
-  const activeAreaDetails = getAreaFromSlug(mapData, activeArea as string)
 
   return (
   <div 
@@ -53,7 +35,7 @@ export default function FramerMap ({mapData} : MapProps) {
     <div
       className={`${styles.mapContainer} ${styles.card}`}
     >
-      <Link href="/map" shallow={true}>
+      <Link href="/heatmap" shallow={true}>
         <div className={styles.zoomButton} onClick={() => {
           setActiveArea(undefined)
         }}>
@@ -65,13 +47,6 @@ export default function FramerMap ({mapData} : MapProps) {
         style={{ 
           // originX: zoomPos.x / 1300, originY: zoomPos.y / 1000,
           width: "100%", aspectRatio: "1.3"
-        }}
-        animate={{
-          x: `calc(${ - zoomPos.x / 13}% + 50%)`, 
-          y: `calc(${- zoomPos.y / 10}% + 50%)`, 
-          scale: zoomPos.scale,
-          originX: zoomPos.x / 1300,
-          originY: zoomPos.y / 1000,
         }}
         transition={{
           duration: 1,
@@ -87,9 +62,7 @@ export default function FramerMap ({mapData} : MapProps) {
         >
           {mapData.map((data, index) => {
             return (
-              <MapArea key={index}
-                activeArea={activeArea} setActiveArea={setActiveArea}
-              setSelectedElement={setSelectedElement} setZoomPos={setZoomPos}
+              <HeatmapArea key={index}
               {...data.attributes} 
               />
             )
@@ -98,53 +71,9 @@ export default function FramerMap ({mapData} : MapProps) {
 
         
         
-      </motion.div>
-
-      <Tooltip {...{zoomPos, selectedElement}}/>
-      
+      </motion.div>      
 
     </div>
-
-
-    {/* Area detail container */}
-
-    <AnimatePresence exitBeforeEnter>
-      {typeof activeArea != "undefined" &&
-      <motion.div
-        className={`${styles.description} ${styles.card}`}
-        exit={{height: 0, paddingBlock: 0}}
-      >
-        {/* Description Text */}
-        <div className="w-2/3">
-          <h1>{activeAreaDetails?.name}</h1>
-          {activeAreaDetails?.displayName &&
-          <h2>'{activeAreaDetails?.displayName}'</h2>
-          }
-          <div dangerouslySetInnerHTML={{__html: activeAreaDetails?.content}} />
-        </div>
-
-        {/* Poster image */}
-        {activeAreaDetails.posterSlug != null &&
-        <div
-          className={`absolute
-          w-1/3 h-44 m-0
-          right-0 top-4/5
-          `}
-        >
-          <Image
-            src={`/img/${activeAreaDetails.posterSlug}.png`}
-            layout="fill"
-            objectFit="contain"
-            style={{
-              boxShadow: "0 0 20px 0 black"
-            }}
-          />
-        </div>
-        }
-      </motion.div>
-      }
-      </AnimatePresence>
-
 
   </div>
   )
