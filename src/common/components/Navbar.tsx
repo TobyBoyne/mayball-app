@@ -1,6 +1,5 @@
 import React, { ReactNode, useState } from "react"
 import Link from "next/link"
-import NavDropdown from "../nav/NavDropdown"
 import { motion } from "framer-motion"
 import { FaAngleRight, FaAngleLeft } from "react-icons/fa"
 

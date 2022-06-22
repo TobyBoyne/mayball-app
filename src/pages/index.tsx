@@ -1,44 +1,63 @@
 import Layout from '../common/components/Layout'
-import MainPoster from "../../public/img/once-upon-a-time.png"
-import Image from 'next/image'
 import Link from 'next/link'
 import styles from './Home.module.css'
 
-import { FaMap, FaClock } from 'react-icons/fa'
+import { FaMap, FaClock, FaBookOpen, FaUtensils } from 'react-icons/fa'
 
 import { motion } from 'framer-motion'
 import { ReactNode } from 'react'
 
+const cardsContainer = {
+  hidden: {opacity: 0},
+  enter: {
+    opacity: 1, 
+    transition : {
+      when: "beforeChildren",
+      staggerChildren: 0.1,
+      delay: 4,
+      
+    }}
+}
+
+const card = {
+  hidden: {opacity: 0, transform: "translateY(-50px)"},
+  enter: {opacity: 1, transform: "translateY(0px)",
+    transition: {
+      duration: 1
+    }}
+}
+
+
 export default function Home () {
   return (
     <>
-    <motion.div
-        className={styles.poster}
-      >
-        <Image src={MainPoster}
-          alt="Downing May Ball 2022 Main Poster"
-          layout="fill"
-          objectFit='contain'
-          objectPosition={"center"}/>
-      </motion.div>
-    <Layout title="Home">
+    <Layout title="Home" homepage={true}>
       
       <h1
         className={styles.title}
       >
-        Welcome to the Downing May Ball
+        Once Upon a Time in Hollywood
       </h1>
       
-      <div
+      <motion.div
         className={styles.allCards}
+        variants={cardsContainer}
+        initial="hidden"
+        animate="enter"
       >
         <HomeLink href="/map">
-          <FaMap /> Map
+          <FaMap /> <br /> Map
         </HomeLink>
         <HomeLink href="/timeline">
-          <FaClock /> Timeline
+          <FaClock /> <br /> Timeline
         </HomeLink>
-      </div>
+        <HomeLink href="/map">
+          <FaBookOpen /> <br /> Programme
+        </HomeLink>
+        <HomeLink href="/map">
+          <FaUtensils /> <br /> Allergens
+        </HomeLink>
+      </motion.div>
 
     </Layout>
     </>
@@ -48,11 +67,12 @@ export default function Home () {
 function HomeLink ({href, children} : {href: string, children: ReactNode}) {
   return (
     <Link href={href}>
-      <a
+      <motion.a
         className={styles.card}
+        variants={card}
       >
         {children}
-      </a>
+      </motion.a>
     </Link>
   )
 }

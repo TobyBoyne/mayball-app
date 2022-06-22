@@ -3,7 +3,7 @@
  */
 
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
-import { useState, useContext, useRef, useCallback } from "react";
+import { useState, useContext, useRef, useCallback, useEffect } from "react";
  
 import TimelineArea from "./TimelineArea";
 import TimelineContext from "./TimelineContext";
@@ -23,32 +23,36 @@ const timelineData = {
 
 export default function Timeline ({eventsData}: {eventsData: MapDataInterface[]}) {
 
-  const [time, setTime] = useState((new Date("2022-06-23T23:00")).getTime())
+  const futureDelta = 1000*60*60*24*2
+
+  const [time, setTime] = useState(Math.round(new Date().getTime() / 1000000) * 1000000 + futureDelta)
   const timeline = useContext(TimelineContext)
   
-//   TODO: make custom hook
-//   useEffect(() => {
-//     const timer = setInterval(() => { // Creates an interval which will update the current data every minute
-//     // This will trigger a rerender every component that uses the useDate hook.
-//     setTime(new Date());
-//   }, 60 * 1000);
-//   return () => {
-//     clearInterval(timer); // Return a funtion to clear the timer so that it will stop being called on unmount
-//   }
-// }, []);
+  useEffect(() => {
+    const timer = setInterval(() => { // Creates an interval which will update the current data every minute
+    // This will trigger a rerender every component that uses the useDate hook.
+    const newTime = Math.round(new Date().getTime() / 1000000) * 1000000
+    setTime(newTime + futureDelta);
+    console.log(time)
+  }, 60*1000);
+  return () => {
+    clearInterval(timer); // Return a funtion to clear the timer so that it will stop being called on unmount
+  }
+}, []);
 
   // scroll to current position
   const ref = useRef<HTMLDivElement | null>(null)
   const scrollPos = (time - timelineData.earliest - timelineData.curTimeOffset) * timelineData.scale
-  console.log(timelineData.earliest)
+  console.log(timelineData.earliest, "now", time)
   const setRef = useCallback((node: HTMLDivElement) => {
     if (node) {
       node.scrollLeft = scrollPos
+    } else {
     }
     ref.current = node
   }, [])
 
-  const clockTicks = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+  const clockTicks = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
   // endscroll
   

@@ -1,8 +1,9 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
-import Navbar from '../modules/nav/Navbar'
+import Navbar from '../common/components/Navbar'
 import "../common/font-awesome"
+import { AnimatePresence } from 'framer-motion'
 
 
 function MyApp({ Component, pageProps, router }: AppProps) {
@@ -16,13 +17,13 @@ function MyApp({ Component, pageProps, router }: AppProps) {
 
     <Navbar />
   
-    {/* <AnimatePresence
+    <AnimatePresence
       exitBeforeEnter
       initial={false}
       onExitComplete={() => window.scrollTo(0,0)}
-    > */}
+    >
       <Component key={router.route} {...pageProps} />
-    {/* </AnimatePresence> */}
+    </AnimatePresence>
   </>
   )
 }

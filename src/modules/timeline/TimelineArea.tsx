@@ -4,7 +4,7 @@
 
 import TimelineEvent from "./TimelineEvent"
 import TimelineContext from "./TimelineContext"
-import { useContext } from "react"
+import { useContext, CSSProperties } from "react"
 import { MapAreaInterface } from "../map/mapTypes"
 import styles from "./Timeline.module.css"
 
@@ -35,13 +35,23 @@ export default function TimelineArea ({name, colour, elements}: MapAreaInterface
   }
   )
 
+  const majorTicks = 1 * 60 * 60 * 1000 * timeline.scale
+
+  const bgstyle: CSSProperties = {
+    backgroundImage: `linear-gradient(90deg, aliceblue 49%, rgba(0,0,0,0.5) 50%, aliceblue 50%, aliceblue 98%, rgba(0,0,0,1) 100%)`,
+    backgroundSize: `${majorTicks}px 10px`
+  }
 
   return (
-    <div className={styles.timelineArea}>
+    <div className={styles.timelineArea}
+      style={bgstyle}
+    >
       <div 
         className="w-0 h-full absolute z-40
         border-red-500 border-2" 
-        style={{left: timeline.scale * (timeline.time - timeline.earliest)}} 
+        style={{
+          left: timeline.scale * (timeline.time - timeline.earliest),
+        }} 
       />
       {timelineElements.map((data, index) => {
         return (

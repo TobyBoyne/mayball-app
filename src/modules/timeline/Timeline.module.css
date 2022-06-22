@@ -7,10 +7,10 @@
 .timelineContainer {
   /* grid-area: main; */
   --labels-width: 60px;
-  --clock-height: 100px;
+  --clock-height: 1.5em;
 
   --area-height: 100px;
-  width: min(600px, 90%);
+  width: min(600px, 100%);
 
   position: relative;
 
@@ -30,12 +30,11 @@
 }
 
 .labels {
-  /* height: 100%; */
-  padding-top: var(--clock-height);
   left: 0;
   position: sticky;
   width: var(--labels-width);
-
+  padding-top: var(--clock-height);
+  transform: translateY(calc(0px - var(--clock-height)));
   display: flex;
   flex-direction: column;
   gap: 3px;
@@ -65,10 +64,10 @@
   z-index: 0;
   position: relative;
 
-  background-color: aliceblue;
+  /* background-color: aliceblue;
   background-image: linear-gradient(90deg, transparent 90%,
     rgba(0,0,0,1) 10%);
-  background-size: 10px 10px;
+  background-size: 10px 10px; */
 }
 
 .timelineEvent {
@@ -92,33 +91,22 @@
   width: 100%;
   height: var(--clock-height);
   left: var(--labels-width);
-  margin-bottom: 10px;
+  top:0;
 
   background-color: aliceblue;
-  position: absolute;
+  position: sticky;
+  z-index: 5;
 }
 
 .clock .major {
-  color: red;
   position: absolute;
 
   width: 10ch;
   transform: translateX(-5ch);
   text-align: center;
+  font-weight: 600;
+  font-size: 0.8em;
 }
-
-.clock .major::after{
-  content: " ";
-  color: darkblue;
-  top: 0;
-  left: 5ch;
-  position: absolute;
-  width: 1px;
-  height: 100vh;
-  border: 2px solid black;
-  z-index: 5;
-}
-
 
 /* Dividers and marks */
 .timelineDivider {
