@@ -22,8 +22,19 @@ export default function MapElement ({name, description, shape, areaSlug, colour,
   const zoomTransition = 2
   const isActive = activeArea == areaSlug
 
-  const [time, setTime] = useState((new Date("2022-06-23T23:00")).getTime())
+  const [time, setTime] = useState(Math.round(new Date().getTime() / 1000000) * 1000000)
   const [currentlyOpen, setCurrentlyOpen] = useState(true)
+
+  useEffect(() => {
+    const timer = setInterval(() => { // Creates an interval which will update the current data every minute
+    // This will trigger a rerender every component that uses the useDate hook.
+    const newTime = Math.round(new Date().getTime() / 1000000) * 1000000
+    setTime(newTime);
+  }, 60*1000);
+  return () => {
+    clearInterval(timer); // Return a funtion to clear the timer so that it will stop being called on unmount
+  }
+}, []);
 
   const rectShape = {
     width: width,

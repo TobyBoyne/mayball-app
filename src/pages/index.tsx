@@ -23,7 +23,7 @@ const card = {
   hidden: {opacity: 0, transform: "translateY(-50px)"},
   enter: {opacity: 1, transform: "translateY(0px)",
     transition: {
-      duration: 1
+      duration: 1,
     }}
 }
 
@@ -51,10 +51,10 @@ export default function Home () {
         <HomeLink href="/timeline">
           <FaClock /> <br /> Timeline
         </HomeLink>
-        <HomeLink href="/map">
+        <HomeLink href="https://downingball.co.uk/programme.pdf">
           <FaBookOpen /> <br /> Programme
         </HomeLink>
-        <HomeLink href="/map">
+        <HomeLink href="https://downingball.co.uk/allergens.pdf">
           <FaUtensils /> <br /> Allergens
         </HomeLink>
       </motion.div>

@@ -23,16 +23,14 @@ const timelineData = {
 
 export default function Timeline ({eventsData}: {eventsData: MapDataInterface[]}) {
 
-  const futureDelta = 1000*60*60*24*2
-
-  const [time, setTime] = useState(Math.round(new Date().getTime() / 1000000) * 1000000 + futureDelta)
+  const [time, setTime] = useState(Math.round(new Date().getTime() / 1000000) * 1000000)
   const timeline = useContext(TimelineContext)
   
   useEffect(() => {
     const timer = setInterval(() => { // Creates an interval which will update the current data every minute
     // This will trigger a rerender every component that uses the useDate hook.
     const newTime = Math.round(new Date().getTime() / 1000000) * 1000000
-    setTime(newTime + futureDelta);
+    setTime(newTime);
   }, 60*1000);
   return () => {
     clearInterval(timer); // Return a funtion to clear the timer so that it will stop being called on unmount

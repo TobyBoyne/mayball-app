@@ -10,7 +10,6 @@ import styles from "./map.module.css"
 import MapBackground from "../../../public/site_plan_blank.png"
 import { useRouter } from "next/router"
 import { FaSearchMinus } from 'react-icons/fa'
-import postUpdate from "../../common/postUpdate"
 
 interface MapProps {
   mapData: MapDataInterface[]
@@ -21,7 +20,6 @@ interface MapProps {
 
 
 export default function Heatmap ({mapData} : MapProps) {
-  postUpdate()
   const router = useRouter()
   const { area } = router.query
   const [activeArea, setActiveArea] = useState<string | undefined>(area as string)

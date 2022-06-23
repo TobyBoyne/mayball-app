@@ -1,3 +1,8 @@
+@font-face {
+  font-family: "Hollywood";
+  src: url('/fonts/Hollywood.ttf');
+}
+
 .container {
   padding: 0 2rem;
 }
@@ -44,6 +49,9 @@
   margin-bottom: 1em;
   line-height: 1.15;
   font-size: 3rem;
+  font-family: "Hollywood";
+  color: white;
+  text-shadow: 0 0 5px black;
 }
 
 .title,
