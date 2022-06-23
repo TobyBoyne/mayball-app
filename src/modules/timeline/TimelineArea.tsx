@@ -22,7 +22,12 @@ type TimelineAreaProps = {
   elements: EventDetails[]
 } 
 
-export default function TimelineArea ({name, colour, elements}: MapAreaInterface) {
+interface Props extends MapAreaInterface {
+  splitrows?: boolean
+}
+
+
+export default function TimelineArea ({name, colour, elements, splitrows=false}: Props) {
   const timeline = useContext(TimelineContext)
 
   const timelineElements = elements.data.filter((el) => {
@@ -33,7 +38,14 @@ export default function TimelineArea ({name, colour, elements}: MapAreaInterface
       el.attributes.onTimeline
     )
   }
-  )
+  ).sort((el1, el2) => {
+    return (
+      (new Date(el1.attributes.startTime as string)).getTime() - (new Date(el2.attributes.startTime as string)).getTime()
+    )
+  })
+
+  const splitY = splitrows ? 100 / timelineElements.length : 0
+  const splitHeight = splitrows ? 100 / timelineElements.length : 100
 
   const majorTicks = 1 * 60 * 60 * 1000 * timeline.scale
 
@@ -55,7 +67,7 @@ export default function TimelineArea ({name, colour, elements}: MapAreaInterface
       />
       {timelineElements.map((data, index) => {
         return (
-          <TimelineEvent colour={colour} key={index}
+          <TimelineEvent colour={colour} key={index} splitY={splitY * index} splitHeight={splitHeight}
           {...data.attributes}/>
         )
       })}

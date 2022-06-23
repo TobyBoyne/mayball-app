@@ -4,12 +4,23 @@
   box-shadow: 0 0 20px 0 black;
 }
 
+.note {
+  font-style:italic;
+  text-align: center;
+  padding: 0.5em;
+}
+
+.note a {
+  color: blue;
+  font-weight: 600;
+}
+
 .timelineContainer {
   /* grid-area: main; */
   --labels-width: 60px;
   --clock-height: 1.5em;
 
-  --area-height: 100px;
+  --area-height: 140px;
   width: min(600px, 100%);
 
   position: relative;
@@ -17,7 +28,7 @@
   
   overflow-x: scroll;
   overflow-y: scroll;
-  height: 90vh;
+  height: auto;
 
   margin-top: 32px;
   margin-bottom: 32px;
@@ -41,7 +52,7 @@
   display: flex;
   flex-direction: column;
   gap: 3px;
-  z-index: 20;
+  z-index: 40;
   background-color: white;
 
 }
@@ -56,6 +67,8 @@
   writing-mode: vertical-rl;
   line-height: 90%;
   /* text-orientation: sideways; */
+
+  font-weight: 600;
 }
 
 
@@ -87,8 +100,19 @@
   font-weight: 700;
   color: white;
 
-  padding-right: 50px;
+  /* padding-right: 50px; */
+
+  text-shadow: 0 0 6px #009688;
+  line-height: 0.9;
+
 }
+.timelineEvent div {
+  position: sticky;
+  margin-right: 20px;
+  left: calc(var(--labels-width) + 10px);
+  width: fit-content;
+}
+
  /* CLOCK */
 .clock {
   width: 100%;

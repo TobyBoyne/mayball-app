@@ -12,7 +12,7 @@ const cardsContainer = {
   enter: {
     opacity: 1, 
     transition : {
-      when: "beforeChildren",
+      // when: "beforeChildren",
       staggerChildren: 0.1,
       delay: 4,
       
@@ -51,12 +51,24 @@ export default function Home () {
         <HomeLink href="/timeline">
           <FaClock /> <br /> Timeline
         </HomeLink>
-        <HomeLink href="https://downingball.co.uk/programme.pdf">
+
+        <motion.a
+          className={styles.card}
+          variants={card}
+          href="https://downingball.co.uk/programme.pdf"
+          target="_blank"
+        >     
           <FaBookOpen /> <br /> Programme
-        </HomeLink>
-        <HomeLink href="https://downingball.co.uk/allergens.pdf">
+          </motion.a>
+
+        <motion.a
+          className={styles.card}
+          variants={card}
+          href="https://downingball.co.uk/allergens.pdf"
+          target="_blank"
+        >     
           <FaUtensils /> <br /> Allergens
-        </HomeLink>
+          </motion.a>
       </motion.div>
 
     </Layout>
@@ -66,13 +78,14 @@ export default function Home () {
 
 function HomeLink ({href, children} : {href: string, children: ReactNode}) {
   return (
-    <Link href={href}>
+    <Link href={href} passHref={true}>
       <motion.a
         className={styles.card}
         variants={card}
+        href={href}
       >
         {children}
       </motion.a>
-    </Link>
+   </Link>
   )
 }

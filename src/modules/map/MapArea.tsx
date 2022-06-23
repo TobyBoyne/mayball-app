@@ -48,11 +48,12 @@ export function MapArea ( {name, slug, colour, elements, shape,
       <polygon
         points={shape}
         // fill={colour}
-        opacity={0.3}
+        fillOpacity={0.3}
         // stroke={colour}
         strokeLinejoin={"round"}
-        strokeWidth={20}
-        className="fill-teal-500 stroke-teal-500"
+        strokeWidth={5}
+        className="fill-teal-500 stroke-teal-900"
+
       >
 
       </polygon>
@@ -88,6 +89,7 @@ export function HeatmapArea ( {shape, busyness}  : MapAreaInterface) {
         // stroke={colour}
         strokeLinejoin={"round"}
         strokeWidth={20}
+        
         {...shortPress}
       ></polygon>
 

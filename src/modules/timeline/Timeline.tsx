@@ -55,6 +55,15 @@ export default function Timeline ({eventsData}: {eventsData: MapDataInterface[]}
   const fullWidth = (timelineData.latest - timelineData.earliest) * timelineData.scale
    return (      
     <TimelineContext.Provider value={{...timelineData, time:time}}>
+      
+      {/* <div className={`${styles.card} ${styles.note}`}
+      >
+        <p>Below is a timeline for all music events, and the outdoor cinema. For a full timeline, please see the <a href="https://downingball.co.uk/programme.pdf"
+          target="_blank">programme
+          </a>.
+
+        </p>
+      </div> */}
 
       <div className={`${styles.timelineContainer} ${styles.card}`}
         ref={setRef}
@@ -80,9 +89,14 @@ export default function Timeline ({eventsData}: {eventsData: MapDataInterface[]}
           <div>Second Stage</div>
           <div>Acoustic Stage</div>
           <div className={styles.timelineDivider} />
-          <div>Hollywood and Vine</div>
+          {/* <div>Hollywood and Vine</div> */}
           <div>Outdoor Cinema</div>
+          <div>Sci-fi</div>
+          <div className={styles.timelineDivider} />
+
           <div>Mystery</div>
+          <div>Action</div>
+          <div>Period Drama</div>
         </div>
 
           <div className={`${styles.timeline}`}
@@ -94,9 +108,15 @@ export default function Timeline ({eventsData}: {eventsData: MapDataInterface[]}
             
             <TimelineDivider />
 
-            <TimelineArea {...getAreaFromSlug(eventsData, "hollywood-and-vine")}/>
+            {/* <TimelineArea {...getAreaFromSlug(eventsData, "hollywood-and-vine")}/> */}
             <TimelineArea {...getAreaFromSlug(eventsData, "the-hollywood-bowl")}/>
-            <TimelineArea {...getAreaFromSlug(eventsData, "mystery")}/>
+            <TimelineArea splitrows={true} {...getAreaFromSlug(eventsData, "sci-fi")}/>
+
+            <TimelineDivider />
+
+            <TimelineArea splitrows={true} {...getAreaFromSlug(eventsData, "mystery")}/>
+            <TimelineArea splitrows={true} {...getAreaFromSlug(eventsData, "action")}/>
+            <TimelineArea splitrows={true} {...getAreaFromSlug(eventsData, "period-drama")}/>
           </div>
 
 

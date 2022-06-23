@@ -46,14 +46,14 @@ export default function MapElement ({name, description, shape, areaSlug, colour,
   const start = (new Date(startTime as string)).getTime()
   const end = (new Date(endTime as string)).getTime()
   useEffect(() => {
-    setCurrentlyOpen((0 < time) && (time < end || end == 0) )
+    setCurrentlyOpen((start < time) && (time < end || end == 0) )
   }, [time])
 
   return (
       // TODO: circles have rx=1000
       <g
         className={`transition-opacity duration-300
-        ${isActive ? "pointer-events-auto" : "pointer-events-none"}`}
+        ${isActive && currentlyOpen ? "pointer-events-auto" : "pointer-events-none"}`}
         onClick={() => setSelectedElement({
           name, 
           description, 
@@ -68,9 +68,9 @@ export default function MapElement ({name, description, shape, areaSlug, colour,
         transition-opacity duration-300
         fill-teal-600
         `}
-      fillOpacity={isActive ? 1 : 0}
+      fillOpacity={isActive ? (currentlyOpen ? 1: 0.2) : 0}
       {...rectShape}
-      display={currentlyOpen ? "inline" : "none"}
+      // display={currentlyOpen ? "inline" : "none"}
       rx={width / 10}
       // fill={colour}
       />

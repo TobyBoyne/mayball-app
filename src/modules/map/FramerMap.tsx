@@ -50,6 +50,14 @@ export default function FramerMap ({mapData} : MapProps) {
     flex flex-col items-center"
   >
     {/* Map container */}
+    <div className={`${styles.card} ${styles.note}`}
+      >
+        <p>Tap on an area for more information. Events will appear on the map when they begin - see the timeline and the <a href="https://downingball.co.uk/programme.pdf"
+          target="_blank">programme
+          </a> for future events. 
+
+        </p>
+      </div>
     <div
       className={`${styles.mapContainer} ${styles.card}`}
     >
@@ -126,18 +134,13 @@ export default function FramerMap ({mapData} : MapProps) {
         {/* Poster image */}
         {activeAreaDetails.posterSlug != null &&
         <div
-          className={`absolute
-          w-1/3 h-44 m-0
-          right-0 top-4/5
-          `}
+          className={styles.poster}
         >
           <Image
             src={`/img/${activeAreaDetails.posterSlug}.png`}
             layout="fill"
             objectFit="contain"
-            style={{
-              boxShadow: "0 0 20px 0 black"
-            }}
+
           />
         </div>
         }
@@ -174,7 +177,7 @@ function Tooltip ({zoomPos, selectedElement}: {
         {
           (typeof selectedElement?.start !== "undefined") 
           ? <p><em>{selectedElement?.start} - {selectedElement?.end}</em></p>
-          : <br />
+          : null
         }
       </motion.div>
   )

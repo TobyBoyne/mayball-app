@@ -32,7 +32,7 @@ const navs = [
   // {name: "AreaOne", slug: "/areas/area1"},
   // {name: "AreaTwo", slug: "/areas/area2"},
   {name: "Timeline", slug: "/timeline"},
-  {name: "Heatmap", slug: "/heatmap"},
+  // {name: "Heatmap", slug: "/heatmap"},
 ]
 
 export default function Navbar ({title}: {title: string}) {

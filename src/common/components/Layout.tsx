@@ -43,7 +43,7 @@ export default function Layout( {children, title, homepage=false} : LayoutProps 
         transition={{
           duration: homepage ? 1 : 0.4, 
           delay: homepage ? 2 : 0,
-          when: "beforeChildren"
+          // when: "beforeChildren"
         }} 
         className='mx-auto
           flex flex-col items-center h-screen'

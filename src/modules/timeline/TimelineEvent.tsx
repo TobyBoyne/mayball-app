@@ -13,9 +13,11 @@ import styles from "./Timeline.module.css"
  interface TimelineEventProps extends MapElementInterface {
   // children: ReactNode
   colour: string
+  splitHeight: number
+  splitY: number
 } 
 
-export default function TimelineEvent ({colour, name, startTime, endTime}: TimelineEventProps) {
+export default function TimelineEvent ({colour, name, startTime, endTime, splitHeight, splitY}: TimelineEventProps) {
   const timeline = useContext(TimelineContext)
   
   const start = (new Date(startTime as string)).getTime()
@@ -26,6 +28,8 @@ export default function TimelineEvent ({colour, name, startTime, endTime}: Timel
   const style = {
     width: duration,
     left: offset,
+    top: `${splitY + 1}%`,
+    height: `${splitHeight - 2}%`
     // backgroundColor: colour,
     
   }
@@ -37,7 +41,7 @@ export default function TimelineEvent ({colour, name, startTime, endTime}: Timel
       style={style}
       className={`${styles.timelineEvent} bg-teal-500`}
     >
-      <div className="w-full left-0">{name}</div>
+      <div className="">{name}</div>
     </div>
   )
 }
